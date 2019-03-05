@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`accounts` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `mattress` DECIMAL NOT NULL,
   `disponible` DECIMAL NOT NULL,
+  `total` DECIMAL NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -57,6 +58,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`transactions` (
   `to` INT NOT NULL,
   `description` VARCHAR(80) NOT NULL,
   `value` DECIMAL NOT NULL,
+  `date` DATE NOT NULL,
   `accounts_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_transactions_accounts1`
@@ -97,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`goals` (
   `date` DATE NOT NULL,
   `totalAmount` INT NOT NULL,
   `fulfilled` BINARY NOT NULL,
+  `savedMoney` DECIMAL NOT NULL,
   `accounts_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_goals_accounts1`
