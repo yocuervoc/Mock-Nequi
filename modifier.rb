@@ -1,4 +1,10 @@
+require_relative 'connection.rb'
+
 class Modifier
+
+	def initialize
+		@db_connection = DbConnection.new()
+	end
 
 	def add_money_account
 
