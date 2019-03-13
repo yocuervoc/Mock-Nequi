@@ -94,7 +94,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`goals` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`goals` (
-  `id` INT NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `date` DATE NOT NULL,
   `totalAmount` INT NOT NULL,
