@@ -1,4 +1,10 @@
+require_relative 'connection.rb'
+
 class Query
+
+	def initialize
+		@db_connection = DbConnection.new()
+	end
 
 	def total_balance_query
 

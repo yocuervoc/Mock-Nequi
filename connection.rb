@@ -8,7 +8,7 @@ class DbConnection
     @client = Mysql2::Client.new(
         host:'localhost',
         username:'root',
-        password:'dracarys',
+        password:'password',
         port:'3306',
         database:'mydb'
     )

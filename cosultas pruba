@@ -19,3 +19,9 @@ insert into users(mail, password, accounts_id ) values ('orlando@gmail.com', 'pa
 insert into users(mail, password, accounts_id ) values ('maria@gmail.com', 'pasw0rd', 6);
 insert into users(mail, password, accounts_id ) values ('angelica@gmail.com', 'pasw0rd', 7);
 insert into users(mail, password, accounts_id ) values ('natalia@gmail.com', 'pasw0rd', 8);
+
+insert into pockets(pocketMoney, name, accounts_id ) values (0, 'NOMBRE', 3);
+
+insert into goals (name, date, totalAmount, fulfilled, savedMoney, accounts_id ) values ("trip", '20201212', 0, 0, 0, 4);
+
+UPDATE accounts SET disponible = disponible + 200 WHERE accounts_id = 1;
