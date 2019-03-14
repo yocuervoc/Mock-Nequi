@@ -1,4 +1,5 @@
 require_relative 'connection.rb'
+
 class Login
 
   attr_accessor :email, :password
@@ -27,9 +28,3 @@ class Login
   end
 
 end
-
-=begin
-l = Login.new("iassj@gmail.com", "password")
-l.log
-
-=end
