@@ -167,8 +167,35 @@ end
 		end
 	end
 
-	def withdraw_money_pocket
+	def withdraw_money_pocket(nombre_pocket, amount)
+		sesion=Login.new(@email, @password)
+		id_user = sesion.log
 
+		result = @db_connection.client.query("select accounts_id from users where id = #{id_user};", :symbolize_keys => true)
+		id_count=999999
+		result.each do |row|
+			id_count= row[:accounts_id]
+		end
+
+		result = @db_connection.client.query("select id from pockets where name = \'#{nombre_pocket}\';", :symbolize_keys => true)
+		id_pocket=nil
+		result.each do |row|
+			id_pocket= row[:id]
+
+		end
+
+		result = @db_connection.client.query("select pocketMoney from pockets where id = #{id_pocket};", :symbolize_keys => true)
+		disponible=0
+		result.each do |row|
+			disponible= row[:pocketMoney]
+		end
+
+		if disponible >= amount
+			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
+			result = @db_connection.client.query("UPDATE pockets SET pocketMoney = pocketMoney - #{amount} WHERE id = #{id_pocket};", :symbolize_keys => true)
+		else
+			puts "transaccion invalida, NO MONEY"
+		end
 	end
 
 	def send_money_pocket(nombre_pocket, amount)
@@ -243,4 +270,5 @@ end
 	#m.send_money("orlando@gmail.com", 135)
 	#m.add_money_account(1000)
 	#m.withdraw_money(80)
-	m.add_money_goal(43, "viaje")
+	#m.add_money_goal(43, "viaje")
+	m.withdraw_money_pocket("carro", 9)
