@@ -25,7 +25,7 @@ class Creation
 	end
 
 	def create_pocket(pocket_name)
-		
+
 		sesion=Login.new(@email, @password)
 		id_user = sesion.log
 
