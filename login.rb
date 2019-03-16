@@ -13,7 +13,7 @@ class Login
 
   def log
 
-    result = @db_connection.client.query("select id from users where mail=\"#{email}\" limit 1;", :symbolize_keys => true)
+    result = @db_connection.client.query("select id from users where mail=\"#{email}\" and password= \'#{password}\' limit 1;", :symbolize_keys => true)
     id_user=nil
     result.each do |row|
       id_user =row[:id]
