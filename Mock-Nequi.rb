@@ -38,5 +38,5 @@ while true
         puts "Saliendo del programa..."
         break
     end
-    
+
 end

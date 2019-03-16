@@ -261,7 +261,7 @@ end
 	end
 end
 #3
-	m= Modifier.new("yocc@gmail.com", "pasw0rd")
+	#m= Modifier.new("yocc@gmail.com", "pasw0rd")
 	#m.add_money_mattress(5)
 	#m.withdraw_money_mattress(2)
 	#m.add_money_pocket("carro", 67)
@@ -270,4 +270,4 @@ end
 	#m.add_money_account(1000)
 	#m.withdraw_money(80)
 	#m.add_money_goal(43, "viaje")
-	m.withdraw_money_pocket("carro", 9)
+	#m.withdraw_money_pocket("carro", 9)
