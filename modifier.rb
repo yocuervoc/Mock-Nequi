@@ -150,7 +150,6 @@ end
 		id_pocket=nil
 		result.each do |row|
 			id_pocket= row[:id]
-
 		end
 
 		result = @db_connection.client.query("select disponible from accounts where id = #{id_count};", :symbolize_keys => true)
