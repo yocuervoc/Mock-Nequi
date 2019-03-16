@@ -13,8 +13,14 @@ class DbConnection
         database:'mydb'
     )
   end
+
   def query(mydb)
     results = @client.query(mydb)
     return  results
   end
+
+  def close_connetion
+    @client.close
+  end
+
 end
