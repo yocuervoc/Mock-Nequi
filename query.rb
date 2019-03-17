@@ -16,7 +16,7 @@ class Query
 		result.each do |row|
 			total = row["total"]
 		end 
-		puts "Total: #{total}"
+		return total
 
 	end
 
@@ -26,8 +26,7 @@ class Query
 		result.each do |row|
 			disponible = row["disponible"]
 		end 
-
-		puts "Disponible: #{disponible}"
+		return disponible	
 
 	end
 	
@@ -42,7 +41,7 @@ class Query
 			mattress = row["mattress"]
 		end 
 
-		puts "Colchon: #{mattress}"
+		return mattress
 
 	end
 	
@@ -63,7 +62,3 @@ class Query
 	end
 		
 end
-
-
-#test =  Query.new('yocc@gmail.com', 'pasw0rd', 1)
-#puts test.total_balance_query(1), test.available_balance_query(1), test.mattress_money_query(1), test.pockets_list(3)

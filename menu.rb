@@ -7,13 +7,11 @@ require_relative 'modifier.rb'
 
 class Menu
 
-	def initialize
-		#@db_connection = DbConnection.new()
-		#id del usuario
-		#nombre del usuario
-		#cuenta principal
-		#bolsillos
-		#metas
+	def initialize(login, user_name)
+		@db_connection = DbConnection.new()
+		@user_id = login.log()
+		@user_name = user_name
+		@query = Query.new(user_name, login.email, login.password)
 		
 	end
 	
@@ -24,11 +22,11 @@ class Menu
 			puts "----------------------------------------------",
 				 "-----------------Mock-Nequi-------------------",
 				 "",
-				 "Bienvenido #nombre del usuario",
+				 "Bienvenido  #{@user_name}",
 				 "",
-				 "Total de dinero: #total",
-				 "Saldo cuenta principal: #cuenta principal",
-				 "En colchon: #Saldo en el colchon",
+				 "Total de dinero: #{@query.total_balance_query(@user_id)}", 
+				 "Saldo disponible en la cuenta: #{@query.available_balance_query(@user_id)}",
+				 "En colchon: #{@query.mattress_money_query(@user_id)}",
 				 "",
 				 "¿Que deseas hacer?",
 				 "1. Agregar dinero a la cuenta principal",
