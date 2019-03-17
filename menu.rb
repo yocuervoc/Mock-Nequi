@@ -14,7 +14,7 @@ class Menu
 		@modifier = Modifier.new(login.email, login.password)
 		
 	end
-	
+
 	def main_menu
 		while true
 			system("clear")
@@ -37,7 +37,7 @@ class Menu
 				 "6. Bolsillos",
 				 "7. Metas",
 				 "8. Cerrar sesion"
-			
+
 			option = gets.chomp
 			case option
 			when "1"
@@ -53,7 +53,7 @@ class Menu
 				value = gets.chomp.to_i
 				#Validar que hay suficiente dinero
 				puts "Saldo actual:  #saldo cuenta principal"
-			
+
 			when "3"
 				system("clear")
 				puts "Ingrese el correo del usuario destino"
@@ -62,27 +62,27 @@ class Menu
 				value = gets.chomp.to_i
 				#Validar que hay suficiente dinero y que el usuario destino exista
 				#Realizar el deposito
-			
+
 			when "4"
 				#Visualizacion de los ultimos 10 movimientos
-			
+
 			when "5"
 				mattress_menu()
-			
+
 			when "6"
 				pockets_menu()
-			
+
 			when "7"
 				goals_menu()
-			
+
 			when "8"
 				break
 			end
-			
+
 		end
-		
+
 	end
-	
+
 	def mattress_menu
 		while true
 			system("clear")
@@ -96,7 +96,7 @@ class Menu
 				 "1. Agregar dinero disponible al colchon",
 				 "2. Enviar dinero a la cuenta principal",
 				 "3. Volver"
-			
+
 			option = gets.chomp
 			case option
 			when "1"
@@ -114,7 +114,7 @@ class Menu
 			end
 		end
 	end
-	
+
 	def pockets_menu
 		while true
 			system("clear")
