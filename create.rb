@@ -5,19 +5,19 @@ require 'digest'
 
 class Creation
 
-	def initialize(user_name, email, password)
-		@user_name= user_name
-		@password = Digest::SHA1.hexdigest password
-		@email = email
+	def initialize(user)
+		@user_name= user.name
+		@password = Digest::SHA1.hexdigest user.password
+		@email = user.email
 		@db_connection = DbConnection.new()
 
-		@sesion=Login.new(email, password)
+		@sesion=Login.new(user)
 		@id_user = @sesion.log
 
 	end
 
-	def register_user()
-		current_user = User.new(@user_name, @password, @email)
+	def register_user
+		current_user = User.new(@user_name, @email, @password)
 		succeful_access = @db_connection.client.query("insert into accounts (disponible,mattress, total) values (0,0,0);", :symbolize_keys => true)
 		result = @db_connection.client.query("select id from accounts order by id desc limit 1;", :symbolize_keys => true)
 		id_count=999999
