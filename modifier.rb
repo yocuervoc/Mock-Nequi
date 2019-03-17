@@ -8,28 +8,25 @@ class Modifier
 		@email = email
 		@password = password
 		@db_connection = DbConnection.new()
+		@sesion=Login.new(email, password)
+		@id_user = @sesion.log
 	end
 
 	def add_money_account(amount)
-		sesion=Login.new(@email, @password)
-		id_user = sesion.log
 
-		result = @db_connection.client.query("select accounts_id from users where id = #{id_user};", :symbolize_keys => true)
+		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
 		id_count=999999
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
 
 		result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
-
-
 	end
 
 	def withdraw_money(amount)
 #############
-sesion=Login.new(@email, @password)
-id_user = sesion.log
-result = @db_connection.client.query("select accounts_id from users where id = #{id_user};", :symbolize_keys => true)
+
+result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
 id_count=999999
 result.each do |row|
 	id_count= row[:accounts_id]
@@ -46,16 +43,12 @@ end
 	 puts "transaccion invalida, NO MONEY"
  end
 
-
 #####
 	end
 
 	def send_money(send_to, amount)
 
-		sesion=Login.new(@email, @password)
-		id_user = sesion.log
-
-		result = @db_connection.client.query("select accounts_id from users where id = #{id_user};", :symbolize_keys => true)
+		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
 		id_count=999999
 		result.each do |row|
 			id_count= row[:accounts_id]
@@ -86,10 +79,7 @@ end
 
 	def add_money_mattress(amount)
 
-				sesion=Login.new(@email, @password)
-				id_user = sesion.log
-
-				result = @db_connection.client.query("select accounts_id from users where id = #{id_user};", :symbolize_keys => true)
+				result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
 				id_count=999999
 				result.each do |row|
 					id_count= row[:accounts_id]
@@ -112,15 +102,13 @@ end
 	end
 
 	def withdraw_money_mattress(amount)
-		sesion=Login.new(@email, @password)
-		id_user = sesion.log
 
-		result = @db_connection.client.query("select accounts_id from users where id = #{id_user};", :symbolize_keys => true)
+		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
 		id_count=999999
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
-
+		puts "flag"
 		result = @db_connection.client.query("select mattress from accounts where id = #{id_count};", :symbolize_keys => true)
 		disponible=0
 		result.each do |row|
@@ -137,10 +125,9 @@ end
 	end
 
 	def add_money_pocket(nombre_pocket, amount)
-		sesion=Login.new(@email, @password)
-		id_user = sesion.log
 
-		result = @db_connection.client.query("select accounts_id from users where id = #{id_user};", :symbolize_keys => true)
+
+		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
 		id_count=999999
 		result.each do |row|
 			id_count= row[:accounts_id]
@@ -167,10 +154,9 @@ end
 	end
 
 	def withdraw_money_pocket(nombre_pocket, amount)
-		sesion=Login.new(@email, @password)
-		id_user = sesion.log
 
-		result = @db_connection.client.query("select accounts_id from users where id = #{id_user};", :symbolize_keys => true)
+
+		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
 		id_count=999999
 		result.each do |row|
 			id_count= row[:accounts_id]
@@ -198,10 +184,9 @@ end
 	end
 
 	def send_money_pocket(nombre_pocket, amount)
-		sesion=Login.new(@email, @password)
-		id_user = sesion.log
 
-		result = @db_connection.client.query("select accounts_id from users where id = #{id_user};", :symbolize_keys => true)
+
+		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
 		id_count=999999
 		result.each do |row|
 			id_count= row[:accounts_id]
@@ -230,10 +215,7 @@ end
 
 	def add_money_goal(amount, name_goal)
 
-		sesion=Login.new(@email, @password)
-		id_user = sesion.log
-
-		result = @db_connection.client.query("select accounts_id from users where id = #{id_user};", :symbolize_keys => true)
+		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
 		id_count=999999
 		result.each do |row|
 			id_count= row[:accounts_id]
@@ -261,6 +243,8 @@ end
 	end
 end
 #3
+	m= Modifier.new("yocc@gmail.com", "pasw0rd")
+	m.withdraw_money(363)
 	#m= Modifier.new("yocc@gmail.com", "pasw0rd")
 	#m.add_money_mattress(5)
 	#m.withdraw_money_mattress(2)
