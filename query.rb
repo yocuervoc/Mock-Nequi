@@ -17,8 +17,8 @@ class Query
 		total = nil
 		result.each do |row|
 			total = row["total"]
-		end
-		puts "Total: #{total}"
+		end 
+		return total
 
 	end
 
@@ -27,9 +27,8 @@ class Query
 		disponible = nil
 		result.each do |row|
 			disponible = row["disponible"]
-		end
-
-		puts "Disponible: #{disponible}"
+		end 
+		return disponible	
 
 	end
 
@@ -44,7 +43,7 @@ class Query
 			mattress = row["mattress"]
 		end
 
-		puts "Colchon: #{mattress}"
+		return mattress
 
 	end
 

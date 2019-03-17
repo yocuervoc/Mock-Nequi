@@ -1,20 +1,18 @@
 require_relative 'connection.rb'
 require_relative 'create.rb'
-require_relative 'user.rb'
 require_relative 'login.rb'
 require_relative 'query.rb'
 require_relative 'modifier.rb'
 
 class Menu
 
-	def initialize
-		#@db_connection = DbConnection.new()
-		#id del usuario
-		#nombre del usuario
-		#cuenta principal
-		#bolsillos
-		#metas
-
+	def initialize(login, user_name)
+		@db_connection = DbConnection.new()
+		@user_id = login.log()
+		@user_name = user_name
+		@query = Query.new(user_name, login.email, login.password)
+		@modifier = Modifier.new(login.email, login.password)
+		
 	end
 
 	def main_menu
@@ -24,11 +22,11 @@ class Menu
 			puts "----------------------------------------------",
 				 "-----------------Mock-Nequi-------------------",
 				 "",
-				 "Bienvenido #nombre del usuario",
+				 "Bienvenido  #{@user_name}",
 				 "",
-				 "Total de dinero: #total",
-				 "Saldo cuenta principal: #cuenta principal",
-				 "En colchon: #Saldo en el colchon",
+				 "Total de dinero: #{@query.total_balance_query(@user_id)}", 
+				 "Saldo disponible en la cuenta: #{@query.available_balance_query(@user_id)}",
+				 "En colchon: #{@query.mattress_money_query(@user_id)}",
 				 "",
 				 "¿Que deseas hacer?",
 				 "1. Agregar dinero a la cuenta principal",
@@ -43,17 +41,21 @@ class Menu
 			option = gets.chomp
 			case option
 			when "1"
+				system("clear")
 				puts "¿Cuanto dinero desea agregar?"
 				value = gets.chomp.to_i
-				#Deposita en la cuenta
+				@modifier.add_money_account(value)
+				puts "Saldo disponible en la cuenta: #{@query.available_balance_query(@user_id)}", sleep(3) 
 
 			when "2"
+				system("clear")
 				puts "¿Cuanto dinero desea retirar?"
 				value = gets.chomp.to_i
 				#Validar que hay suficiente dinero
 				puts "Saldo actual:  #saldo cuenta principal"
 
 			when "3"
+				system("clear")
 				puts "Ingrese el correo del usuario destino"
 				email = gets.chomp
 				puts "Ingrese valor a depositar"
