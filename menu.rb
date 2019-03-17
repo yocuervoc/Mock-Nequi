@@ -1,6 +1,5 @@
 require_relative 'connection.rb'
 require_relative 'create.rb'
-require_relative 'user.rb'
 require_relative 'login.rb'
 require_relative 'query.rb'
 require_relative 'modifier.rb'
@@ -12,6 +11,7 @@ class Menu
 		@user_id = login.log()
 		@user_name = user_name
 		@query = Query.new(user_name, login.email, login.password)
+		@modifier = Modifier.new(login.email, login.password)
 		
 	end
 	
@@ -41,17 +41,21 @@ class Menu
 			option = gets.chomp
 			case option
 			when "1"
+				system("clear")
 				puts "¿Cuanto dinero desea agregar?"
 				value = gets.chomp.to_i
-				#Deposita en la cuenta
+				@modifier.add_money_account(value)
+				puts "Saldo disponible en la cuenta: #{@query.available_balance_query(@user_id)}", sleep(3) 
 
 			when "2"
+				system("clear")
 				puts "¿Cuanto dinero desea retirar?"
 				value = gets.chomp.to_i
 				#Validar que hay suficiente dinero
 				puts "Saldo actual:  #saldo cuenta principal"
 			
 			when "3"
+				system("clear")
 				puts "Ingrese el correo del usuario destino"
 				email = gets.chomp
 				puts "Ingrese valor a depositar"
