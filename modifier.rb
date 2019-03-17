@@ -21,6 +21,9 @@ class Modifier
 		end
 
 		result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
+
+		 #transaction(from, to, description, value)
+		 transaction(@id_user, @id_user, "consignacion", amount)
 	end
 
 	def withdraw_money(amount)
@@ -216,7 +219,7 @@ end
 	def add_money_goal(amount, name_goal)
 
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		id_count=999999
+		id_count=nil
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
@@ -241,10 +244,23 @@ end
 		end
 
 	end
+	def transaction(from, to, description, value)
+		if from == to
+			result = @db_connection.client.query("insert into transactions (`from`, `to`, `description`, `value`, `date`, `accounts_id`) values (#{from},#{to},\'#{description}\',#{value},now(), #{from});", :symbolize_keys => true)
+		else
+
+			result = @db_connection.client.query("insert into transaccion (from, to, description, value, date, accounts_id) values (#{from},#{to},\'#{description}\',#{value},now(), #{from});", :symbolize_keys => true)
+			result = @db_connection.client.query("insert into transaccion (from, to, description, value, date, accounts_id) values (#{from},#{to},\'#{description}\',#{value},now(), #{to});", :symbolize_keys => true)
+		end
+
+
+	end
 end
 #3
-	m= Modifier.new("yocc@gmail.com", "pasw0rd")
-	m.withdraw_money(363)
+	m= Modifier.new("jorge@gmail.com", "pasw0rd")
+	m.add_money_account(399)
+	#m.withdraw_money(363)
+	#m.transaction(1,1,"uto", 66)
 	#m= Modifier.new("yocc@gmail.com", "pasw0rd")
 	#m.add_money_mattress(5)
 	#m.withdraw_money_mattress(2)

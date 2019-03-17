@@ -34,4 +34,4 @@ select disponible from accounts where id = 1;
 select name, pocketMoney from pockets where accounts_id = 1;
 select name, date, savedMoney, totalAmount, from goals where accounts_id = 1;
 
-
+insert into transactions (`from`, `to`, `description`, `value`, `date`, `accounts_id`) values (1,1,'hgfds',77,now(), 6);
