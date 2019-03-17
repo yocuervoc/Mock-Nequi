@@ -18,14 +18,7 @@ class Login
     result.each do |row|
       id_user =row[:id]
     end
-=begin
-    if id_user.class == Integer
-      puts "succeful transaction"
-      return id_user
-    else
-      puts "usuario no encontrado"
-    end
-=end
+    return id_user
   end
 
 end

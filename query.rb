@@ -3,18 +3,20 @@ require_relative 'login.rb'
 
 class Query
 
+	attr_accessor :email, :password, :db_connection, :sesion, :id_user
 	def initialize(user)
 
 		@email = user.email
-		@password = user.password
+		@password = Digest::SHA1.hexdigest user.password
 		@db_connection = DbConnection.new()
 		@sesion=Login.new(user)
 		@id_user = @sesion.log
+		puts "en construc query #{@id_user}"
 	end
 
 	def total_balance_query
-		result = @db_connection.client.query("select total from accounts where id = #{@id_user};")
-		total = nil
+		result = @db_connection.client.query("select a.total from accounts a join users u on u.accounts_id = a.id where u.id= #{@id_user};")
+		total = 0
 		result.each do |row|
 			total = row["total"]
 		end
@@ -23,8 +25,8 @@ class Query
 	end
 
 	def available_balance_query
-		result = @db_connection.client.query("select disponible from accounts where id = #{@id_user};")
-		disponible = nil
+		result = @db_connection.client.query("select a.disponible from accounts a join users u on u.accounts_id = a.id where u.id= #{@id_user};")
+		disponible = 0
 		result.each do |row|
 			disponible = row["disponible"]
 		end
@@ -34,15 +36,18 @@ class Query
 
 	def transactions_query
 		result = @db_connection.client.query("select * from transaction where accounts_id = #{@id_user};")
+
+		result.each do |row|
+			mattress = row
+		end
 	end
 
 	def mattress_money_query
 		result = @db_connection.client.query("select mattress from accounts where id = #{@id_user};")
-		mattress = nil
+		mattress = 0
 		result.each do |row|
 			mattress = row["mattress"]
 		end
-
 		return mattress
 
 	end

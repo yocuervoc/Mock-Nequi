@@ -15,7 +15,7 @@ class Modifier
 	def add_money_account(amount)
 
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		id_count=999999
+		id_count=nil
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
@@ -30,7 +30,7 @@ class Modifier
 #############
 
 result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-id_count=999999
+id_count=nil
 result.each do |row|
 	id_count= row[:accounts_id]
 end
@@ -87,7 +87,7 @@ end
 	def add_money_mattress(amount)
 
 				result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-				id_count=999999
+				id_count=nil
 				result.each do |row|
 					id_count= row[:accounts_id]
 
