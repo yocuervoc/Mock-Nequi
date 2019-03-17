@@ -22,10 +22,9 @@ while true
         email = gets.chomp
         puts "Ingrese contraseña: "
         password = gets.chomp
-        create = Creation.new(user_name,email,password)
-        create.register_user()
-        login = Login.new(email,password)
-        menu = Menu.new(login, user_name)
+        usuario = User.new(user_name,email,password)
+        creacion = Creation.new(usuario)
+        menu = Menu2.new()
         menu.main_menu()
 
 

@@ -4,11 +4,11 @@ require_relative 'login.rb'
 
 class Modifier
 
-	def initialize(email, password)
-		@email = email
-		@password = password
+	def initialize(user)
+		@email = user.email
+		@password = user.password
 		@db_connection = DbConnection.new()
-		@sesion=Login.new(email, password)
+		@sesion=Login.new(user)
 		@id_user = @sesion.log
 	end
 
@@ -278,7 +278,7 @@ end
 	#m.add_money_account(399)
 	#m.withdraw_money(363)
 	#m.transaction(1,1,"uto", 66)
-	c= Modifier.new("yocc@gmail.com", "pasw0rd")
+	#c= Modifier.new("yocc@gmail.com", "pasw0rd")
 	#c.add_money_mattress(5)
 	#c.withdraw_money_mattress(2)
 	#c.add_money_pocket("carro", 67)
@@ -286,5 +286,5 @@ end
 	#c.send_money("orlando@gmail.com", 135)
 	#c.add_money_account(1000)
 	#c.withdraw_money(80)
-	c.add_money_goal(43, "viaje")
+	#c.add_money_goal(43, "viaje")
 	#c.withdraw_money_pocket("carro", 9)

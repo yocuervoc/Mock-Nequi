@@ -10,9 +10,9 @@ class Menu
 		@db_connection = DbConnection.new()
 		@user_id = login.log()
 		@user_name = user_name
-		@query = Query.new(user_name, login.email, login.password)
+		@query = Query.new(login.email, login.password)
 		@modifier = Modifier.new(login.email, login.password)
-		
+
 	end
 
 	def main_menu
@@ -24,9 +24,9 @@ class Menu
 				 "",
 				 "Bienvenido  #{@user_name}",
 				 "",
-				 "Total de dinero: #{@query.total_balance_query(@user_id)}", 
-				 "Saldo disponible en la cuenta: #{@query.available_balance_query(@user_id)}",
-				 "En colchon: #{@query.mattress_money_query(@user_id)}",
+				 "Total de dinero: #{@query.total_balance_query}",
+				 "Saldo disponible en la cuenta: #{@query.available_balance_query}",
+				 "En colchon: #{@query.mattress_money_query}",
 				 "",
 				 "¿Que deseas hacer?",
 				 "1. Agregar dinero a la cuenta principal",
@@ -45,7 +45,7 @@ class Menu
 				puts "¿Cuanto dinero desea agregar?"
 				value = gets.chomp.to_i
 				@modifier.add_money_account(value)
-				puts "Saldo disponible en la cuenta: #{@query.available_balance_query(@user_id)}", sleep(3) 
+				puts "Saldo disponible en la cuenta: #{@query.available_balance_query(@user_id)}", sleep(3)
 
 			when "2"
 				system("clear")

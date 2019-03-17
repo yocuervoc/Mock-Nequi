@@ -3,12 +3,12 @@ require_relative 'login.rb'
 
 class Query
 
-	def initialize(email password)
+	def initialize(user)
 
-		@email = email
-		@password = password
+		@email = user.email
+		@password = user.password
 		@db_connection = DbConnection.new()
-		@sesion=Login.new(email, password)
+		@sesion=Login.new(user)
 		@id_user = @sesion.log
 	end
 
@@ -17,7 +17,7 @@ class Query
 		total = nil
 		result.each do |row|
 			total = row["total"]
-		end 
+		end
 		return total
 
 	end
@@ -27,8 +27,8 @@ class Query
 		disponible = nil
 		result.each do |row|
 			disponible = row["disponible"]
-		end 
-		return disponible	
+		end
+		return disponible
 
 	end
 
@@ -49,7 +49,7 @@ class Query
 
 	def pockets_list
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		id_count=999999
+		id_count=nil
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
@@ -62,7 +62,7 @@ class Query
 
 	def goals_list
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		id_count=999999
+		id_count=nil
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
