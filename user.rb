@@ -6,7 +6,6 @@ class User
   	@name = name
   	@password = password
   	@email = email
-    @db_connection = DbConnection.new()
   end
 
 

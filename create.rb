@@ -1,14 +1,19 @@
 require_relative 'connection.rb'
 require_relative 'user.rb'
 require_relative 'login.rb'
+require 'digest'
 
 class Creation
 
 	def initialize(user_name, email, password)
 		@user_name= user_name
-		@password = password
+		@password = Digest::SHA1.hexdigest password
 		@email = email
 		@db_connection = DbConnection.new()
+
+		@sesion=Login.new(email, password)
+		@id_user = @sesion.log
+
 	end
 
 	def register_user()
@@ -26,10 +31,7 @@ class Creation
 
 	def create_pocket(pocket_name)
 
-		sesion=Login.new(@email, @password)
-		id_user = sesion.log
-
-		result = @db_connection.client.query("select accounts_id from users where id = #{id_user} ;", :symbolize_keys => true)
+		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user} ;", :symbolize_keys => true)
 		accounts_id=999999
 		result.each do |row|
 			accounts_id=row[:accounts_id]
@@ -41,10 +43,7 @@ class Creation
 
 	def delete_pocket(name_pocket)
 
-		sesion=Login.new(@email, @password)
-		id_user = sesion.log
-
-		result = @db_connection.client.query("select accounts_id from users where id = #{id_user};", :symbolize_keys => true)
+		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
 		accounts_id=999999
 		result.each do |row|
 			accounts_id=row[:accounts_id]
@@ -73,10 +72,7 @@ class Creation
 
 	def create_goals(name, date, totalAmount )
 
-		sesion=Login.new(@email, @password)
-		id_user = sesion.log
-
-		result = @db_connection.client.query("select accounts_id from users where id = #{id_user} ;", :symbolize_keys => true)
+		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user} ;", :symbolize_keys => true)
 		accounts_id=999999
 
 		result.each do |row|
@@ -87,10 +83,7 @@ class Creation
 
 	def delete_goals(goal_name)
 
-		sesion=Login.new(@email, @password)
-		id_user = sesion.log
-
-		result = @db_connection.client.query("select accounts_id from users where id = #{id_user};", :symbolize_keys => true)
+		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
 		accounts_id=999999
 		result.each do |row|
 			accounts_id=row[:accounts_id]
@@ -120,6 +113,9 @@ class Creation
 
 end
 
+#test = Creation.new("Yonatan", "encrip2@gmail.com", "password3")
+#test.register_user()
+#test.create_pocket("carro")
 =begin
 test = Creation.new("yocc", "password3", "yocc@gmail.com")
 test.register_user()

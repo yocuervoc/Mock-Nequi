@@ -1,4 +1,5 @@
 require_relative 'connection.rb'
+require 'digest'
 
 class Login
 
@@ -7,12 +8,13 @@ class Login
   def initialize(email, password)
     @db_connection = DbConnection.new()
     @email = email
-    @password = password
+    @password = Digest::SHA1.hexdigest password
 
   end
 
   def log
-
+    puts "email #{email}"
+    puts "pss #{password}"
     result = @db_connection.client.query("select id from users where mail=\"#{email}\" and password= \'#{password}\' limit 1;", :symbolize_keys => true)
     id_user=nil
     result.each do |row|

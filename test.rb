@@ -26,5 +26,5 @@ class TestSelect
 end
 
 #init
-object = TestSelect.new()
-object.select_test
+#object = TestSelect.new()
+#object.select_test
