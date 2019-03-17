@@ -33,8 +33,8 @@ class Query
 
 	end
 
-	def transactions_query(number)
-
+	def transactions_query
+		result = @db_connection.client.query("select * from transaction where accounts_id = #{@id_user};")
 	end
 
 	def mattress_money_query
@@ -75,7 +75,3 @@ class Query
 	end
 
 end
-
-
-#test =  Query.new('yocc@gmail.com', 'pasw0rd', 1)
-#puts test.total_balance_query(1), test.available_balance_query(1), test.mattress_money_query(1), test.pockets_list(3)

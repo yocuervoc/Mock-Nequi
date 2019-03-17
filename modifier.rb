@@ -36,12 +36,14 @@ result.each do |row|
 end
 
 result = @db_connection.client.query("select disponible from accounts where id = #{id_count};", :symbolize_keys => true)
-disponible=999999
+disponible=nil
 result.each do |row|
 	disponible= row[:disponible]
 end
  if amount <= disponible
 	 result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
+	 #transaction(from, to, description, value)
+	 transaction(@id_user, @id_user, "retiro dinero", amount)
  else
 	 puts "transaccion invalida, NO MONEY"
  end
@@ -52,7 +54,7 @@ end
 	def send_money(send_to, amount)
 
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		id_count=999999
+		id_count=nil
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
@@ -67,12 +69,15 @@ end
 		send=""
 		result.each do |row|
 			send= row[:accounts_id]
-			puts row[:accounts_id]
+
 		end
 
 		if disponible >= amount
 			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
 			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{send};", :symbolize_keys => true)
+			#transaction(from, to, description, value)
+
+ 		 transaction(@id_user, send, "envio de dinero a #{send_to}", amount)
 
 		else
 			puts "transaccion invalida, NO MONEY"
@@ -86,7 +91,7 @@ end
 				id_count=999999
 				result.each do |row|
 					id_count= row[:accounts_id]
-					puts row[:accounts_id]
+
 				end
 
 				result = @db_connection.client.query("select disponible from accounts where id = #{id_count};", :symbolize_keys => true)
@@ -98,7 +103,8 @@ end
 				if disponible >= amount
 					result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
 					result = @db_connection.client.query("UPDATE accounts SET mattress = mattress + #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
-
+					#transaction(from, to, description, value)
+		 		 transaction(@id_user, @id_user, "envio a colchon", amount)
 				else
 					puts "transaccion invalida, NO MONEY"
 				end
@@ -107,11 +113,11 @@ end
 	def withdraw_money_mattress(amount)
 
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		id_count=999999
+		id_count=nil
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
-		puts "flag"
+
 		result = @db_connection.client.query("select mattress from accounts where id = #{id_count};", :symbolize_keys => true)
 		disponible=0
 		result.each do |row|
@@ -121,7 +127,8 @@ end
 		if disponible >= amount
 			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
 			result = @db_connection.client.query("UPDATE accounts SET mattress = mattress - #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
-
+			#transaction(from, to, description, value)
+ 		 transaction(@id_user, @id_user, "retiro de colchon", amount)
 		else
 			puts "transaccion invalida, NO MONEY"
 		end
@@ -129,9 +136,8 @@ end
 
 	def add_money_pocket(nombre_pocket, amount)
 
-
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		id_count=999999
+		id_count=nil
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
@@ -151,6 +157,8 @@ end
 		if disponible >= amount
 			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
 			result = @db_connection.client.query("UPDATE pockets SET pocketMoney = pocketMoney + #{amount} WHERE id = #{id_pocket};", :symbolize_keys => true)
+			#transaction(from, to, description, value)
+ 		 transaction(@id_user, @id_user, "envio direnro al bolsillo #{nombre_pocket}", amount)
 		else
 			puts "transaccion invalida, NO MONEY"
 		end
@@ -160,7 +168,7 @@ end
 
 
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		id_count=999999
+		id_count=nil
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
@@ -181,6 +189,9 @@ end
 		if disponible >= amount
 			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
 			result = @db_connection.client.query("UPDATE pockets SET pocketMoney = pocketMoney - #{amount} WHERE id = #{id_pocket};", :symbolize_keys => true)
+			#transaction(from, to, description, value)
+
+ 		 transaction(@id_user, @id_user, "retiro dinero del bolsillo #{nombre_pocket}", amount)
 		else
 			puts "transaccion invalida, NO MONEY"
 		end
@@ -190,7 +201,7 @@ end
 
 
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		id_count=999999
+		id_count=nil
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
@@ -211,6 +222,8 @@ end
 		if disponible >= amount
 			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
 			result = @db_connection.client.query("UPDATE pockets SET pocketMoney = pocketMoney - #{amount} WHERE id = #{id_pocket};", :symbolize_keys => true)
+			#transaction(from, to, description, value)
+ 		 transaction(@id_user, @id_user, "envio desde el bolsillo #{nombre_pocket}", amount)
 		else
 			puts "transaccion invalida, NO MONEY"
 		end
@@ -230,44 +243,49 @@ end
 			id_goal= row[:id]
 		end
 
-		result = @db_connection.client.query("select disponible from accounts where id = #{id_count};", :symbolize_keys => true)
-		disponible=0
-		result.each do |row|
-			disponible= row[:disponible]
+		if id_goal.class == Integer
+			result = @db_connection.client.query("select disponible from accounts where id = #{id_count};", :symbolize_keys => true)
+			disponible=0
+			result.each do |row|
+				disponible= row[:disponible]
+			end
+
+			if disponible >= amount
+				result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
+				result = @db_connection.client.query("UPDATE goals SET savedMoney = savedMoney + #{amount} WHERE id = #{id_goal};", :symbolize_keys => true)
+				#transaction(from, to, description, value)
+	 		 	#transaction(@id_user, @id_user, "envio de dinero a una meta", amount)
+			else
+				puts "transaccion invalida, NO MONEY"
+			end
+		else
+			puts "Meta no existente"
 		end
 
-		if disponible >= amount
-			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
-			result = @db_connection.client.query("UPDATE goals SET savedMoney = savedMoney + #{amount} WHERE id = #{id_goal};", :symbolize_keys => true)
-		else
-			puts "transaccion invalida, NO MONEY"
-		end
+
 
 	end
 	def transaction(from, to, description, value)
 		if from == to
 			result = @db_connection.client.query("insert into transactions (`from`, `to`, `description`, `value`, `date`, `accounts_id`) values (#{from},#{to},\'#{description}\',#{value},now(), #{from});", :symbolize_keys => true)
 		else
-
-			result = @db_connection.client.query("insert into transaccion (from, to, description, value, date, accounts_id) values (#{from},#{to},\'#{description}\',#{value},now(), #{from});", :symbolize_keys => true)
-			result = @db_connection.client.query("insert into transaccion (from, to, description, value, date, accounts_id) values (#{from},#{to},\'#{description}\',#{value},now(), #{to});", :symbolize_keys => true)
+			result = @db_connection.client.query("insert into transactions (`from`, `to`, `description`, `value`, `date`, `accounts_id`) values (#{from},#{to},\'#{description}\',#{value},now(), #{from});", :symbolize_keys => true)
+			result = @db_connection.client.query("insert into transactions (`from`, `to`, `description`, `value`, `date`, `accounts_id`) values (#{from},#{to},\'#{description}\',#{value},now(), #{to});", :symbolize_keys => true)
 		end
-
-
 	end
 end
-#3
-	m= Modifier.new("jorge@gmail.com", "pasw0rd")
-	m.add_money_account(399)
+
+	#m= Modifier.new("jorge@gmail.com", "pasw0rd")
+	#m.add_money_account(399)
 	#m.withdraw_money(363)
 	#m.transaction(1,1,"uto", 66)
-	#m= Modifier.new("yocc@gmail.com", "pasw0rd")
-	#m.add_money_mattress(5)
-	#m.withdraw_money_mattress(2)
-	#m.add_money_pocket("carro", 67)
-	#m.send_money_pocket("carro", 40)
-	#m.send_money("orlando@gmail.com", 135)
-	#m.add_money_account(1000)
-	#m.withdraw_money(80)
-	#m.add_money_goal(43, "viaje")
-	#m.withdraw_money_pocket("carro", 9)
+	c= Modifier.new("yocc@gmail.com", "pasw0rd")
+	#c.add_money_mattress(5)
+	#c.withdraw_money_mattress(2)
+	#c.add_money_pocket("carro", 67)
+	#c.send_money_pocket("carro", 40)
+	#c.send_money("orlando@gmail.com", 135)
+	#c.add_money_account(1000)
+	#c.withdraw_money(80)
+	c.add_money_goal(43, "viaje")
+	#c.withdraw_money_pocket("carro", 9)
