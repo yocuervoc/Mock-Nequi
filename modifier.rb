@@ -82,7 +82,6 @@ end
 		else
 			puts "transaccion invalida, NO MONEY"
 		end
-
 	end
 
 	def add_money_mattress(amount)
@@ -94,11 +93,11 @@ end
 
 				end
 
-				result = @db_connection.client.query("select disponible from accounts where id = #{id_count};", :symbolize_keys => true)
-				disponible=0
-				result.each do |row|
-					disponible= row[:disponible]
-				end
+		result = @db_connection.client.query("select disponible from accounts where id = #{id_count};", :symbolize_keys => true)
+		disponible=0
+		result.each do |row|
+			disponible= row[:disponible]
+		end
 
 				if disponible >= amount
 					result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
