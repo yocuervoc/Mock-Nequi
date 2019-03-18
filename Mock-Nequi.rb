@@ -2,9 +2,7 @@ require_relative 'connection.rb'
 require_relative 'create.rb'
 require_relative "login.rb"
 require_relative "menu.rb"
-require_relative "menu2.0.rb"
 
-include Menu2
 while true
     system("clear")
     puts "----------------------------------------------",
@@ -27,7 +25,8 @@ while true
         usuario = User.new(user_name,email,password)
         creacion = Creation.new(usuario)
         creacion.register_user
-        Menu2.main_menu(usuario)
+        Menu = Menu.new(usuario)
+        Menu.main_menu(usuario)
 
     when "2"
         system("clear")
@@ -35,19 +34,23 @@ while true
         email = gets.chomp
         puts "Ingrese contraseña: "
         password = gets.chomp
-        user = User.new(nil, email, password)
-        usuario=Login.new(user)
-        if usuario.log.class == Integer
-          Menu2.main_menu(user)
+        user = User.new(email,email,password)
+        usuario = Login.new(user)
+        if usuario.log.class == Integer 
+            Menu = Menu.new(user)
+            Menu.main_menu(user)
         else
-          puts "correo o contraseña invalida"
-          sleep(2)
+            puts "Correo o contraseña incorrecta"
+            sleep(2)
         end
 
     when "3"
         system("clear")
         puts "Saliendo del programa..."
         break
+    else
+        system("clear")
+        puts "Opcion incorrecta, vuelva a intentar"
+        sleep(1)
     end
-
 end
