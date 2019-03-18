@@ -7,6 +7,7 @@ class Login
 
   def initialize(user)
     @db_connection = DbConnection.new()
+    @user_name = user.name
     @email = user.email
     @password = Digest::SHA1.hexdigest user.password
 

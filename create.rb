@@ -25,7 +25,7 @@ class Creation
 			id_count= row[:id]
 		end
 
-		succeful_access = @db_connection.client.query("insert into users(mail, password, accounts_id ) values (\"#{current_user.email}\",\"#{ current_user.password}\", #{id_count});", :symbolize_keys => true)
+		succeful_access = @db_connection.client.query("insert into users(mail, password, user_name ,accounts_id ) values (\"#{current_user.email}\",\"#{ current_user.password}\",\"#{ current_user.name}\", #{id_count});", :symbolize_keys => true)
 
 	end
 
@@ -113,17 +113,3 @@ class Creation
 
 end
 
-#test = Creation.new("Yonatan", "encrip2@gmail.com", "password3")
-#test.register_user()
-#test.create_pocket("carro")
-=begin
-test = Creation.new("yocc", "password3", "yocc@gmail.com")
-test.register_user()
-test.create_pocket("carro")
-test.create_goals("viaje", "20210101", 3000, )
-
-
-c=Creation.new("yocc","yocc@gmail.com", "pasw0rd")
-c.delete_pocket("carro")
-c.delete_goals("viaje")
-=end

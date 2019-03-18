@@ -43,7 +43,7 @@ class Query
 	end
 
 	def mattress_money_query
-		result = @db_connection.client.query("select mattress from accounts where id = #{@id_user};")
+		result = @db_connection.client.query("select a.mattress from accounts a join users u on u.accounts_id = a.id where u.id= #{@id_user};")
 		mattress = 0
 		result.each do |row|
 			mattress = row["mattress"]
@@ -71,7 +71,7 @@ class Query
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
-		result = @db_connection.client.query("select name, date, savedMoney, totalAmount, from goals where accounts_id = #{id_count};")
+		result = @db_connection.client.query("select name, date, savedMoney, totalAmount from goals where accounts_id = #{id_count};")
 		result.each do |row|
 			puts row
 		end

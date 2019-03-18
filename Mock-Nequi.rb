@@ -2,9 +2,7 @@ require_relative 'connection.rb'
 require_relative 'create.rb'
 require_relative "login.rb"
 require_relative "menu.rb"
-require_relative "menu2.0.rb"
 
-include Menu2
 while true
     system("clear")
     puts "----------------------------------------------",
@@ -27,10 +25,8 @@ while true
         usuario = User.new(user_name,email,password)
         creacion = Creation.new(usuario)
         creacion.register_user
-        puts "llega"
-        Menu2.main_menu(usuario)
-        puts "pasa"
-
+        Menu = Menu.new(usuario)
+        Menu.main_menu(usuario)
 
     when "2"
         system("clear")
@@ -38,6 +34,9 @@ while true
         email = gets.chomp
         puts "Ingrese contraseña: "
         password = gets.chomp
+        usuario = User.new(email,email,password)
+        Menu = Menu.new(usuario)
+        Menu.main_menu(usuario)
 
     when "3"
         system("clear")
