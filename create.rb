@@ -32,7 +32,7 @@ class Creation
 	def create_pocket(pocket_name)
 
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user} ;", :symbolize_keys => true)
-		accounts_id=999999
+		accounts_id=nil
 		result.each do |row|
 			accounts_id=row[:accounts_id]
 		end
@@ -44,7 +44,7 @@ class Creation
 	def delete_pocket(name_pocket)
 
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		accounts_id=999999
+		accounts_id=nil
 		result.each do |row|
 			accounts_id=row[:accounts_id]
 		end
@@ -70,10 +70,10 @@ class Creation
 
 	end
 
-	def create_goals(name, date, totalAmount )
+	def create_goals(name, date, totalAmount)
 
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user} ;", :symbolize_keys => true)
-		accounts_id=999999
+		accounts_id=nil
 
 		result.each do |row|
 			accounts_id=row[:accounts_id]
@@ -84,7 +84,7 @@ class Creation
 	def delete_goals(goal_name)
 
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		accounts_id=999999
+		accounts_id=nil
 		result.each do |row|
 			accounts_id=row[:accounts_id]
 		end

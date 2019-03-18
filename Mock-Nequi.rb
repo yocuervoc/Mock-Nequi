@@ -34,14 +34,23 @@ while true
         email = gets.chomp
         puts "Ingrese contraseña: "
         password = gets.chomp
-        usuario = User.new(email,email,password)
-        Menu = Menu.new(usuario)
-        Menu.main_menu(usuario)
+        user = User.new(email,email,password)
+        usuario = Login.new(user)
+        if usuario.log.class == Integer 
+            Menu = Menu.new(user)
+            Menu.main_menu(user)
+        else
+            puts "Correo o contraseña incorrecta"
+            sleep(2)
+        end
 
     when "3"
         system("clear")
         puts "Saliendo del programa..."
         break
+    else
+        system("clear")
+        puts "Opcion incorrecta, vuelva a intentar"
+        sleep(1)
     end
-
 end

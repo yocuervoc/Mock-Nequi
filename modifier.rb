@@ -155,7 +155,8 @@ class Modifier
 			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
 			result = @db_connection.client.query("UPDATE pockets SET pocketMoney = pocketMoney + #{amount} WHERE id = #{id_pocket};", :symbolize_keys => true)
 			#transaction(from, to, description, value)
- 		 transaction(@id_user, @id_user, "envio direnro al bolsillo #{nombre_pocket}", amount)
+		  	transaction(@id_user, @id_user, "envio direnro al bolsillo #{nombre_pocket}", amount)
+			puts "transaccion exitosa"
 		else
 			puts "transaccion invalida, NO MONEY"
 		end
@@ -186,9 +187,10 @@ class Modifier
 		if disponible >= amount
 			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{id_count};", :symbolize_keys => true)
 			result = @db_connection.client.query("UPDATE pockets SET pocketMoney = pocketMoney - #{amount} WHERE id = #{id_pocket};", :symbolize_keys => true)
+			
 			#transaction(from, to, description, value)
-
- 		 transaction(@id_user, @id_user, "retiro dinero del bolsillo #{nombre_pocket}", amount)
+			transaction(@id_user, @id_user, "retiro dinero del bolsillo #{nombre_pocket}", amount)
+			puts "transaccion exitosa"
 		else
 			puts "transaccion invalida, NO MONEY"
 		end

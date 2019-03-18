@@ -3,6 +3,7 @@ require_relative 'create.rb'
 require_relative 'login.rb'
 require_relative 'query.rb'
 require_relative 'modifier.rb'
+require_relative 'user.rb'
 
 class Menu
 
@@ -44,14 +45,14 @@ class Menu
 				value = gets.chomp.to_i
 				@modificador.add_money_account(value)
 				puts "nuevo saldo #{@consulta.available_balance_query}"
-				sleep(3)
+				sleep(2)
 			when "2"
 				system("clear")
 				puts "¿Cuanto dinero desea retirar?"
 				value = gets.chomp.to_i
 				@modificador.withdraw_money(value)
 				puts "nuevo saldo #{@consulta.available_balance_query}"
-				sleep(3)
+				sleep(2)
 		
 			when "3"
 				system("clear")
@@ -59,12 +60,15 @@ class Menu
 				email = gets.chomp
 				puts "Ingrese valor a depositar"
 				value = gets.chomp.to_i
-				modificador.send_money(email,value)
+				@modificador.send_money(email,value)
 				puts "nuevo saldo #{@consulta.available_balance_query}"
-				sleep(3)
+				sleep(2)
 		
 			when "4"
-				modificador.transactions_query
+				system("clear")
+				puts "Listado de Tansacciones"
+				puts @consulta.transactions_query
+				sleep(5)
 		
 			when "5"
 				mattress_menu()
@@ -77,6 +81,10 @@ class Menu
 
 			when "8"
 				break
+			else
+				system("clear")
+				puts "Opcion incorrecta, vuelva a intentar"
+				sleep(1)
 			end
 		end
 	end
@@ -101,17 +109,21 @@ class Menu
 				puts "¿Cuanto dinero desea ingresar al colchon?"
 				value = gets.chomp.to_i
 				@modificador.add_money_mattress(value)
-				puts "nuevo saldo #{@consulta.mattress_money_query}"
-				sleep(3)
+				puts "Nuevo saldo en el colchon: #{@consulta.mattress_money_query}"
+				sleep(2)
 			when "2"
 				system("clear")
 				puts "¿Cuanto desea sacar del colchon?"
 				value = gets.chomp.to_i
 				@modificador.withdraw_money_mattress(value)
-				puts "nuevo saldo #{@consulta.mattress_money_query}"
-				sleep(3)
+				puts "Nuevo saldo en el colchon: #{@consulta.mattress_money_query}"
+				sleep(2)
 			when "3"
 				break
+			else
+				system("clear")
+				puts "Opcion incorrecta, vuelva a intentar"
+				sleep(1)
 			end
 		end
 	end
@@ -140,14 +152,16 @@ class Menu
 				puts "Nombre del bolsillo"
 				pocket_name = gets.chomp
 				@creacion.create_pocket(pocket_name)
-				sleep(3)
+				puts "Bolsillo creado exitosamente"
+				sleep(2)
 				
 			when "2"
 				system("clear")
 				puts "Ingrese el nombre del bolsillo que desea eliminar"
 				pocket_name = gets.chomp
 				@creacion.delete_pocket(pocket_name)
-				sleep(3)
+				puts "Bolsillo eliminado exitosamente"
+				sleep(2)
 				
 			when "3"
 				system("clear")
@@ -156,16 +170,16 @@ class Menu
 				puts "Ingrese la cantidad de dinero"
 				value = gets.chomp.to_i
 				@modificador.add_money_pocket(pocket_name,value)
-				sleep(3)
+				sleep(2)
 				
 			when "4"
 				system("clear")
 				puts "Ingrese el nombre del bolsillo que desea retirarle dinero"
-				pocket_name = gets.chompi
+				pocket_name = gets.chomp
 				puts "Ingrese la cantidad de dinero"
 				value = gets.chomp.to_i
 				@modificador.withdraw_money_pocket(pocket_name,value)
-				sleep(3)
+				sleep(2)
 			when "5"
 				system("clear")
 				puts "Ingrese el nombre del bolsillo del que desea enviar dinero"
@@ -176,9 +190,13 @@ class Menu
 				value = gets.chomp.to_i
 				#A otro usuario
 				@modificador.send_money_pocket(pocket_name,value)
-				sleep(3)
+				sleep(2)
 			when "6"
 				break
+			else
+				system("clear")
+				puts "Opcion incorrecta, vuelva a intentar"
+				sleep(1)
 			end
 		end
 	end
@@ -209,7 +227,7 @@ class Menu
 				puts "Ingrese Fecha limite (YYYYMMDD)"
 				goal_date = gets.chomp
 				@creacion.create_goals(goal_name,goal_date,value)
-				sleep(3)
+				sleep(2)
 			when "2"
 				system("clear")
 				puts "Ingrese el numero de la meta que desea cerrar"
@@ -222,9 +240,13 @@ class Menu
 				puts "Ingrese valor a depositar"
 				value = gets.chomp.to_i
 				@modificador.add_money_goal(goal_name,value)
-				sleep(3)
+				sleep(2)
 			when "4"
 				break
+			else
+				system("clear")
+				puts "Opcion incorrecta, vuelva a intentar"
+				sleep(1)
 			end
 		end
 	end

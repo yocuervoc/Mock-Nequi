@@ -11,7 +11,7 @@ class Query
 		@db_connection = DbConnection.new()
 		@sesion=Login.new(user)
 		@id_user = @sesion.log
-		puts "en construc query #{@id_user}"
+		
 	end
 
 	def total_balance_query
@@ -35,11 +35,19 @@ class Query
 	end
 
 	def transactions_query
-		result = @db_connection.client.query("select * from transaction where accounts_id = #{@id_user};")
-
+		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
+		id_count=nil
 		result.each do |row|
-			mattress = row
+			id_count= row[:accounts_id]
 		end
+
+		list = ""
+		result = @db_connection.client.query("select * from transactions where accounts_id = #{id_count};")
+		result.each do |row|
+			list = list + "#{row["description"]} \t #{row["value"]} \t #{row["date"]} \n"
+		end
+
+		return list
 	end
 
 	def mattress_money_query
@@ -59,9 +67,11 @@ class Query
 			id_count= row[:accounts_id]
 		end
 		result = @db_connection.client.query("select name, pocketMoney from pockets where accounts_id = #{id_count};")
+		list = ""
 		result.each do |row|
-			puts row
+			list = list + "#{row["name"]} \t #{row["pocketMoney"]} \n"
 		end
+		return list
 
 	end
 
@@ -72,9 +82,12 @@ class Query
 			id_count= row[:accounts_id]
 		end
 		result = @db_connection.client.query("select name, date, savedMoney, totalAmount from goals where accounts_id = #{id_count};")
+		list = ""
 		result.each do |row|
-			puts row
+			list = list + "#{row["name"]} \t #{row["savedMoney"]} \t #{row["totalAmount"]} \n"
 		end
+		
+		return list
 
 	end
 
