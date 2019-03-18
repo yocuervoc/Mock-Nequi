@@ -158,6 +158,7 @@ end
 			result = @db_connection.client.query("UPDATE pockets SET pocketMoney = pocketMoney + #{amount} WHERE id = #{id_pocket};", :symbolize_keys => true)
 			#transaction(from, to, description, value)
  		 transaction(@id_user, @id_user, "envio direnro al bolsillo #{nombre_pocket}", amount)
+		 puts "succesful transaction"
 		else
 			puts "transaccion invalida, NO MONEY"
 		end
@@ -191,6 +192,7 @@ end
 			#transaction(from, to, description, value)
 
  		 transaction(@id_user, @id_user, "retiro dinero del bolsillo #{nombre_pocket}", amount)
+		 puts "transaccion exitosa"
 		else
 			puts "transaccion invalida, NO MONEY"
 		end

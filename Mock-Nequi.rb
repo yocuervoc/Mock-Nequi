@@ -27,10 +27,7 @@ while true
         usuario = User.new(user_name,email,password)
         creacion = Creation.new(usuario)
         creacion.register_user
-        puts "llega"
         Menu2.main_menu(usuario)
-        puts "pasa"
-
 
     when "2"
         system("clear")
@@ -38,6 +35,14 @@ while true
         email = gets.chomp
         puts "Ingrese contraseña: "
         password = gets.chomp
+        user = User.new(nil, email, password)
+        usuario=Login.new(user)
+        if usuario.log.class == Integer
+          Menu2.main_menu(user)
+        else
+          puts "correo o contraseña invalida"
+          sleep(2)
+        end
 
     when "3"
         system("clear")
