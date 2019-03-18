@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`users` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `mail` VARCHAR(60) NOT NULL,
   `password` VARCHAR(60) NOT NULL,
+  `user_name` VARCHAR(60) NOT NULL,
   `accounts_id` INT NOT NULL,
   PRIMARY KEY (`id`, `accounts_id`),
   CONSTRAINT `fk_users_accounts`
