@@ -7,9 +7,10 @@ class Query
 	def initialize(user)
 
 		@email = user.email
-		@password = Digest::SHA1.hexdigest user.password
-		@db_connection = DbConnection.new()
+		@password = user.password
+		
 		@sesion=Login.new(user)
+		@db_connection = @sesion.db_connection
 		@id_user = @sesion.log
 		
 	end

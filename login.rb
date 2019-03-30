@@ -1,15 +1,14 @@
 require_relative 'connection.rb'
-require 'digest'
 
 class Login
 
-  attr_accessor :email, :password
+  attr_accessor :email, :password, :db_connection
 
   def initialize(user)
     @db_connection = DbConnection.new()
     @user_name = user.name
     @email = user.email
-    @password = Digest::SHA1.hexdigest user.password
+    @password =  user.password
 
   end
 

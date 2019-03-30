@@ -1,17 +1,16 @@
 require_relative 'connection.rb'
 require_relative 'user.rb'
 require_relative 'login.rb'
-require 'digest'
 
 class Creation
 
 	def initialize(user)
 		@user_name= user.name
-		@password = Digest::SHA1.hexdigest user.password
+		@password = user.password
 		@email = user.email
-		@db_connection = DbConnection.new()
-
+		
 		@sesion=Login.new(user)
+		@db_connection = @sesion.db_connection
 		@id_user = @sesion.log
 
 	end
@@ -20,7 +19,7 @@ class Creation
 		current_user = User.new(@user_name, @email, @password)
 		succeful_access = @db_connection.client.query("insert into accounts (disponible,mattress, total) values (0,0,0);", :symbolize_keys => true)
 		result = @db_connection.client.query("select id from accounts order by id desc limit 1;", :symbolize_keys => true)
-		id_count=999999
+		id_count=nil
 		result.each do |row|
 			id_count= row[:id]
 		end
