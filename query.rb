@@ -8,8 +8,9 @@ class Query
 
 		@email = user.email
 		@password = user.password
-		@db_connection = DbConnection.new()
+		
 		@sesion=Login.new(user)
+		@db_connection = @sesion.db_connection
 		@id_user = @sesion.log
 		
 	end

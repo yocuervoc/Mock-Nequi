@@ -8,9 +8,9 @@ class Creation
 		@user_name= user.name
 		@password = user.password
 		@email = user.email
-		@db_connection = DbConnection.new()
-
+		
 		@sesion=Login.new(user)
+		@db_connection = @sesion.db_connection
 		@id_user = @sesion.log
 
 	end

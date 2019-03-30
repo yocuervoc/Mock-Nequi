@@ -176,34 +176,39 @@ class Menu
 				pocket_name = gets.chomp
 				@creacion.create_pocket(pocket_name)
 				puts "Bolsillo creado exitosamente"
-				sleep(2)
+				
 				
 			when "2"
 				system("clear")
 				puts "Ingrese el nombre del bolsillo que desea eliminar"
 				pocket_name = gets.chomp
-
 				@creacion.delete_pocket(pocket_name)
-				puts "Bolsillo eliminado exitosamente"
-				sleep(2)
-				
 			when "3"
 				system("clear")
 				puts "Ingrese el nombre del bolsillo que desea agregarle dinero"
 				pocket_name = gets.chomp
 				puts "Ingrese la cantidad de dinero"
 				value = gets.chomp.to_i
-				@modificador.add_money_pocket(pocket_name,value)
-				sleep(2)
-				
+				validacion = Validator.new()
+				if validacion.positive_number(value)
+					@modificador.add_money_pocket(pocket_name,value)
+				else
+					puts "monto invalido"
+				end
 			when "4"
 				system("clear")
 				puts "Ingrese el nombre del bolsillo que desea retirarle dinero"
 				pocket_name = gets.chomp
 				puts "Ingrese la cantidad de dinero"
 				value = gets.chomp.to_i
-				@modificador.withdraw_money_pocket(pocket_name,value)
-				sleep(2)
+				validacion = Validator.new()
+				if validacion.positive_number(value)
+					@modificador.withdraw_money_pocket(pocket_name,value)
+				else
+					puts "monto invalido"
+				end
+				
+				
 			when "5"
 				system("clear")
 				puts "Ingrese el nombre del bolsillo del que desea enviar dinero"

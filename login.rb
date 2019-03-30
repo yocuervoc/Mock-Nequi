@@ -2,7 +2,7 @@ require_relative 'connection.rb'
 
 class Login
 
-  attr_accessor :email, :password
+  attr_accessor :email, :password, :db_connection
 
   def initialize(user)
     @db_connection = DbConnection.new()
