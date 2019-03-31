@@ -23,9 +23,15 @@ while true
         password = gets.chomp
         usuario = User.new(user_name,email,password)
         creacion = Creation.new(usuario)
-        creacion.register_user
-        Menu = Menu.new(usuario)
-        Menu.main_menu(usuario)
+        succeful_register = creacion.register_user
+        if succeful_register
+          Menu = Menu.new(usuario)
+          Menu.main_menu(usuario)
+        else
+          puts "Pulse enter para volver"
+          option = gets.chomp
+        end
+
 
     when "2"
         system("clear")
@@ -35,7 +41,7 @@ while true
         password = gets.chomp
         user = User.new(email,email,password)
         usuario = Login.new(user)
-        if usuario.log.class == Integer 
+        if usuario.log.class == Integer
             Menu = Menu.new(user)
             Menu.main_menu(user)
         else

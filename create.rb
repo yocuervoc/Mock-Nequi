@@ -18,14 +18,26 @@ class Creation
 
 	def register_user
 		current_user = User.new(@user_name, @email, @password)
-		succeful_access = @db_connection.client.query("insert into accounts (disponible,mattress, total) values (0,0,0);", :symbolize_keys => true)
-		result = @db_connection.client.query("select id from accounts order by id desc limit 1;", :symbolize_keys => true)
-		accounts_id=nil
-		result.each do |row|
-			accounts_id= row[:id]
+		user_exists = @db_connection.client.query("select id from users where mail = \'#{@email}\'", :symbolize_keys => true)
+		id_count=nil
+		user_exists.each do |i|
+			id_count= i[:id]
 		end
 
-		succeful_access = @db_connection.client.query("insert into users(mail, password, user_name ,accounts_id ) values (\"#{current_user.email}\",\"#{ current_user.password}\",\"#{ current_user.name}\", #{accounts_id});", :symbolize_keys => true)
+		if id_count ==nil
+			succeful_access = @db_connection.client.query("insert into accounts (disponible,mattress, total) values (0,0,0);", :symbolize_keys => true)
+			result = @db_connection.client.query("select id from accounts order by id desc limit 1;", :symbolize_keys => true)
+			id_count=nil
+			result.each do |row|
+				id_count= row[:id]
+			end
+
+			succeful_access = @db_connection.client.query("insert into users(mail, password, user_name ,accounts_id ) values (\"#{current_user.email}\",\"#{ current_user.password}\",\"#{ current_user.name}\", #{id_count});", :symbolize_keys => true)
+			return true
+		else
+			puts "el email ya se encuntra registrado"
+			return false
+		end
 
 	end
 
