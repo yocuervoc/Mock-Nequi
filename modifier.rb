@@ -68,18 +68,20 @@ class Modifier
 		send=""
 		result.each do |row|
 			send= row[:accounts_id]
-
 		end
 
-		if disponible >= amount
-			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{accounts_id};", :symbolize_keys => true)
-			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{send};", :symbolize_keys => true)
-			#transaction(from, to, description, value)
- 		 	transaction(@id_user, send, "envio de dinero a #{send_to}", amount)
-
+		if send== ""
+			puts "correo invalido"
 		else
-			puts "transaccion invalida, NO MONEY"
-		end
+			if disponible >= amount
+				result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{accounts_id};", :symbolize_keys => true)
+				result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{send};", :symbolize_keys => true)
+				#transaction(from, to, description, value)
+				transaction(@id_user, send, "envio de dinero a #{send_to}", amount)
+			else
+				puts "transaccion invalida, NO MONEY"
+			end
+		end 
 	end
 
 	def add_money_mattress(amount)
