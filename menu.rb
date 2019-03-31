@@ -259,7 +259,7 @@ class Menu
 				validacion = Validator.new()
 				if validacion.positive_number(value)
 					@modificador.add_money_pocket(pocket_name,value)
-					
+
 				else
 					puts "Monto Invalido"
 				end
@@ -276,7 +276,7 @@ class Menu
 				validacion = Validator.new()
 				if validacion.positive_number(value)
 					@modificador.withdraw_money_pocket(pocket_name,value)
-					
+
 				else
 					puts "Monto Invalido"
 				end
@@ -296,7 +296,7 @@ class Menu
 				validacion = Validator.new()
 				if validacion.positive_number(value)
 					@modificador.send_money_pocket(pocket_name,value)
-					
+
 				else
 					puts "Monto Invalido"
 				end
@@ -399,7 +399,6 @@ class Menu
 				validacion = Validator.new()
 				if validacion.positive_number(value)
 					@modificador.add_money_goal(goal_name,value)
-					puts "Dinero Agregado exitosamente"
 				else
 					puts "Monto Invalido"
 				end

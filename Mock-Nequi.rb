@@ -27,8 +27,8 @@ while true
         creacion = Creation.new(usuario)
         succeful_register = creacion.register_user
         if succeful_register
-          Menu = Menu.new(usuario)
-          Menu.main_menu(usuario)
+          mnnu = Menu.new(usuario)
+          mnnu.main_menu(usuario)
         else
           puts "Pulse enter para volver"
           option = gets.chomp
