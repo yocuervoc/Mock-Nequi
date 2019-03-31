@@ -35,15 +35,15 @@ class Query
 
 	end
 
-	def transactions_query
+	def transactions_query(number)
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		id_count=nil
+		accounts_id=nil
 		result.each do |row|
-			id_count= row[:accounts_id]
+			accounts_id= row[:accounts_id]
 		end
 
 		list = ""
-		result = @db_connection.client.query("select * from transactions where accounts_id = #{id_count};")
+		result = @db_connection.client.query("select * from transactions where accounts_id = #{accounts_id} order by date desc limit #{number};")
 		result.each do |row|
 			list = list + "| #{row["date"]} | #{row["description"].ljust(49)} | #{row["value"].to_s.rjust(10)} | \n"
 		end
@@ -63,11 +63,11 @@ class Query
 
 	def pockets_list
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		id_count=nil
+		accounts_id=nil
 		result.each do |row|
-			id_count= row[:accounts_id]
+			accounts_id= row[:accounts_id]
 		end
-		result = @db_connection.client.query("select name, pocketMoney from pockets where accounts_id = #{id_count};")
+		result = @db_connection.client.query("select name, pocketMoney from pockets where accounts_id = #{accounts_id};")
 		list = ""
 		result.each do |row|
 			list = list + "| #{row["name"].ljust(62)} | #{row["pocketMoney"].to_s.rjust(10)} | \n"
@@ -78,11 +78,11 @@ class Query
 
 	def goals_list
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
-		id_count=nil
+		accounts_id=nil
 		result.each do |row|
-			id_count= row[:accounts_id]
+			accounts_id= row[:accounts_id]
 		end
-		result = @db_connection.client.query("select name, date, savedMoney, totalAmount, fulfilled from goals where accounts_id = #{id_count};")
+		result = @db_connection.client.query("select name, date, savedMoney, totalAmount, fulfilled from goals where accounts_id = #{accounts_id};")
 		list = ""
 		result.each do |row|
 			list = list + "| #{row["name"].ljust(30)} | #{row["savedMoney"].to_s.rjust(11)} | #{row["totalAmount"].to_s.rjust(11)} | #{row["date"]} | #{row["fulfilled"].to_s} |\n"
