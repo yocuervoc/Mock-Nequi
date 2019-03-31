@@ -229,6 +229,7 @@ class Menu
 				validacion = Validator.new()
 				if validacion.pocket_name_validator(pocket_name)
 					@creacion.create_pocket(pocket_name)
+					puts "Bolsillo creado exitosamente"
 				else
 					puts "Nombre invalido"
 					puts "Pulse enter para volver"
@@ -254,6 +255,7 @@ class Menu
 				validacion = Validator.new()
 				if validacion.positive_number(value)
 					@modificador.add_money_pocket(pocket_name,value)
+					puts "Transaccion exitosa"
 				else
 					puts "Monto Invalido"
 				end
@@ -270,6 +272,7 @@ class Menu
 				validacion = Validator.new()
 				if validacion.positive_number(value)
 					@modificador.withdraw_money_pocket(pocket_name,value)
+					puts "Transaccion exitosa"
 				else
 					puts "Monto Invalido"
 				end
@@ -289,6 +292,7 @@ class Menu
 				validacion = Validator.new()
 				if validacion.positive_number(value)
 					@modificador.send_money_pocket(pocket_name,value)
+					puts "Transaccion exitosa"
 				else
 					puts "Monto Invalido"
 				end
@@ -340,26 +344,32 @@ class Menu
 					puts "Ingrese el valor de la meta"
 					value = gets.chomp.to_i
 					if validacion.positive_number(value)
-						puts "Ingrese Fecha limite (YYYYMMDD)"
-						goal_date = gets.chomp
-						@creacion.create_goals(goal_name,goal_date,value)
+						puts "Fecha limite", "Por favor ingrese el año: "
+						year = gets.chomp.to_i
+						puts "Por favor ingrese el mes: "
+						month = gets.chomp.to_i
+						puts "Por favor ingrese el dia: "
+						day = gets.chomp.to_i
+						if validacion.date(year,month,day)
+							goal_date = year.to_s + month.to_s + day.to_s 
+							@creacion.create_goals(goal_name,goal_date,value)
+							puts "Meta creada exitosamente"
+						else
+							puts "Fecha Invalido"	
+						end
 					else
 						puts "Monto Invalido"
-					end
-
-					puts "Pulse enter para volver"
-					option = gets.chomp
+					end					
 				else
 					puts "Nombre invalido"
-					puts "Pulse enter para volver"
-					option = gets.chomp
 				end
-
-
+				puts "Pulse enter para volver"
+				option = gets.chomp
+			
 
 			when "3"
 				system("clear")
-				puts "Ingrese el numero de la meta que desea cerrar"
+				puts "Ingrese el nombre de la meta que desea cerrar"
 				toclose = gets.chomp
 				@creacion.delete_goals(toclose)
 
@@ -375,6 +385,7 @@ class Menu
 				validacion = Validator.new()
 				if validacion.positive_number(value)
 					@modificador.add_money_goal(goal_name,value)
+					puts "Dinero Agregado exitosamente"
 				else
 					puts "Monto Invalido"
 				end

@@ -18,7 +18,6 @@ class Creation
 
 	def register_user
 		current_user = User.new(@user_name, @email, @password)
-
 		user_exists = @db_connection.client.query("select id from users where mail = \'#{@email}\'", :symbolize_keys => true)
 		id_count=nil
 		user_exists.each do |i|
@@ -39,8 +38,6 @@ class Creation
 			puts "el email ya se encuntra registrado"
 			return false
 		end
-
-
 
 	end
 
@@ -114,7 +111,7 @@ class Creation
 		savedMoney=nil
 		result.each do |row|
 			savedMoney= row[:savedMoney]
-			puts row
+			puts "Dinero de la meta", savedMoney 
 		end
 
 		if id_goal.class == Integer
