@@ -339,27 +339,28 @@ class Menu
 				if validacion.goal_name_validator(goal_name)
 					puts "Ingrese el valor de la meta"
 					value = gets.chomp.to_i
-				if validacion.positive_number(value)
-					puts "Fecha limite", "Por favor ingrese el año: "
-					year = gets.chomp.to_i
-					puts "Por favor ingrese el mes: "
-					month = gets.chomp.to_i
-					puts "Por favor ingrese el dia: "
-					day = gets.chomp.to_i
-					if validacion.date(year,month,day)
-						goal_date = year.to_s + month.to_s + day.to_s 
-						@creacion.create_goals(goal_name,goal_date,value)	
+					if validacion.positive_number(value)
+						puts "Fecha limite", "Por favor ingrese el año: "
+						year = gets.chomp.to_i
+						puts "Por favor ingrese el mes: "
+						month = gets.chomp.to_i
+						puts "Por favor ingrese el dia: "
+						day = gets.chomp.to_i
+						if validacion.date(year,month,day)
+							goal_date = year.to_s + month.to_s + day.to_s 
+							@creacion.create_goals(goal_name,goal_date,value)	
+						else
+							puts "Fecha Invalido"	
+						end
 					else
-						puts "Fecha Invalido"	
-					end
-										
+						puts "Monto Invalido"
+					end					
 				else
 					puts "Nombre invalido"
-					puts "Pulse enter para volver"
-					option = gets.chomp
 				end
-
-
+				puts "Pulse enter para volver"
+				option = gets.chomp
+			
 
 			when "3"
 				system("clear")

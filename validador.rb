@@ -15,6 +15,7 @@ class Validator
 	def pocket_name_validator(name)
 		return (name.length >= 1 and name[0]!= " ")? true : false
 	end
+
 	def date(year,month,day)
 		t = Time.now
 		if year < t.strftime("%Y").to_i
@@ -41,7 +42,6 @@ class Validator
 		end
 		
 	end
-
 
 	def goal_name_validator(name)
 		return (name.length >= 1 and name[0]!= " ")? true : false
