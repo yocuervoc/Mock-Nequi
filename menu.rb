@@ -259,7 +259,7 @@ class Menu
 				validacion = Validator.new()
 				if validacion.positive_number(value)
 					@modificador.add_money_pocket(pocket_name,value)
-					puts "Transaccion exitosa"
+					
 				else
 					puts "Monto Invalido"
 				end
@@ -276,7 +276,7 @@ class Menu
 				validacion = Validator.new()
 				if validacion.positive_number(value)
 					@modificador.withdraw_money_pocket(pocket_name,value)
-					puts "Transaccion exitosa"
+					
 				else
 					puts "Monto Invalido"
 				end
@@ -296,7 +296,7 @@ class Menu
 				validacion = Validator.new()
 				if validacion.positive_number(value)
 					@modificador.send_money_pocket(pocket_name,value)
-					puts "Transaccion exitosa"
+					
 				else
 					puts "Monto Invalido"
 				end
@@ -355,7 +355,17 @@ class Menu
 						puts "Por favor ingrese el dia: "
 						day = gets.chomp.to_i
 						if validacion.date(year,month,day)
-							goal_date = year.to_s + month.to_s + day.to_s
+							if month < 10
+								mes = "0" + month.to_s
+							else
+								mes = month.to_s
+							end
+							if day < 10
+								dia = "0" + day.to_s
+							else
+								dia = day.to_s
+							end
+							goal_date = year.to_s + mes + dia
 							@creacion.create_goals(goal_name,goal_date,value)
 							puts "Meta creada exitosamente"
 						else
