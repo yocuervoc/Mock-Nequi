@@ -14,9 +14,9 @@ Se utiliza la gema https://www.rubydoc.info/gems/mysql2/0.5.2 para conectarse a 
 
 ## Uso
 
-1. Correr el script database.sql en  un servidor Mysql 5.x para crear la base de datos necesaria.
-2. Modificar las propiedades de conexion del servidor Mysql.
-3. Correr el programa Mock-Nequi.rb
+1. Correr el script database.sql en un servidor Mysql 5.x para crear la base de datos necesaria.
+2. Modificar las propiedades de conexion del servidor Mysql en el archivo connection.rb 
+3. Instalar ruby 2.5.x y correr el programa Mock-Nequi.rb
 
 Colaboradores
 - Oscar Gomez
