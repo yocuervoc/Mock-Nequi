@@ -12,7 +12,7 @@ class Creation
 
 		@sesion=Login.new(user)
 		@db_connection = @sesion.db_connection
-		@id_user = @sesion.log
+		@id_user = @sesion.id_current_user
 
 	end
 
@@ -111,7 +111,7 @@ class Creation
 		savedMoney=nil
 		result.each do |row|
 			savedMoney= row[:savedMoney]
-			puts "Dinero de la meta", savedMoney 
+			puts "Dinero de la meta", savedMoney
 		end
 
 		if id_goal.class == Integer
