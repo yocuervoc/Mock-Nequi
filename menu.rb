@@ -339,7 +339,6 @@ class Menu
 				if validacion.goal_name_validator(goal_name)
 					puts "Ingrese el valor de la meta"
 					value = gets.chomp.to_i
-					validacion = Validator.new()
 					if validacion.positive_number(value)
 						puts "Ingrese Fecha limite (YYYYMMDD)"
 						goal_date = gets.chomp
