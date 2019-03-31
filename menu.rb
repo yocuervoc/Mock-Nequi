@@ -101,6 +101,10 @@ class Menu
 				goals_menu()
 
 			when "8"
+
+				user.name=nil
+				user.password=nil
+				user.email=nil
 				break
 			else
 				puts "Opcion incorrecta, vuelva a intentar","Pulse enter para volver"
@@ -351,21 +355,21 @@ class Menu
 						puts "Por favor ingrese el dia: "
 						day = gets.chomp.to_i
 						if validacion.date(year,month,day)
-							goal_date = year.to_s + month.to_s + day.to_s 
+							goal_date = year.to_s + month.to_s + day.to_s
 							@creacion.create_goals(goal_name,goal_date,value)
 							puts "Meta creada exitosamente"
 						else
-							puts "Fecha Invalido"	
+							puts "Fecha Invalido"
 						end
 					else
 						puts "Monto Invalido"
-					end					
+					end
 				else
 					puts "Nombre invalido"
 				end
 				puts "Pulse enter para volver"
 				option = gets.chomp
-			
+
 
 			when "3"
 				system("clear")

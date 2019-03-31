@@ -41,14 +41,7 @@ while true
         password = gets.chomp
         user = User.new(email,email,password)
         usuario = Login.new(user)
-        if usuario.log.class == Integer
-            Menu = Menu.new(user)
-            Menu.main_menu(user)
-        else
-            puts "Correo o contraseña incorrecta","Pulse enter para volver"
-			option = gets.chomp
-        end
-
+        usuario.current_user_is_logged(user)
     when "3"
         system("clear")
         puts "Saliendo del programa..."
