@@ -211,8 +211,7 @@ class Menu
 				"3. Eliminar bolsillo",
 				"4. Agregar dinero a un bolsillo",
 				"5. Retirar dinero de un bolsillo",
-				"6. Enviar dinero de un bolsillo a otro usuario",
-				"7. Volver"
+				"6. Volver"
 
 			option = gets.chomp
 			case option
@@ -285,26 +284,6 @@ class Menu
 				option = gets.chomp
 
 			when "6"
-				system("clear")
-				puts "Ingrese el nombre del bolsillo del que desea enviar dinero"
-				pocket_name = gets.chomp
-				puts "Ingrese el correo del usuario destino"
-				email = gets.chomp
-				puts "Ingrese valor a depositar"
-				value = gets.chomp.to_i
-
-				validacion = Validator.new()
-				if validacion.positive_number(value)
-					@modificador.send_money_pocket(pocket_name,value)
-
-				else
-					puts "Monto Invalido"
-				end
-
-				puts "Pulse enter para volver"
-				option = gets.chomp
-
-			when "7"
 				break
 			else
 				puts "Opcion incorrecta, vuelva a intentar","Pulse enter para volver"
