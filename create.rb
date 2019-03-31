@@ -20,12 +20,12 @@ class Creation
 		current_user = User.new(@user_name, @email, @password)
 		succeful_access = @db_connection.client.query("insert into accounts (disponible,mattress, total) values (0,0,0);", :symbolize_keys => true)
 		result = @db_connection.client.query("select id from accounts order by id desc limit 1;", :symbolize_keys => true)
-		id_count=nil
+		accounts_id=nil
 		result.each do |row|
-			id_count= row[:id]
+			accounts_id= row[:id]
 		end
 
-		succeful_access = @db_connection.client.query("insert into users(mail, password, user_name ,accounts_id ) values (\"#{current_user.email}\",\"#{ current_user.password}\",\"#{ current_user.name}\", #{id_count});", :symbolize_keys => true)
+		succeful_access = @db_connection.client.query("insert into users(mail, password, user_name ,accounts_id ) values (\"#{current_user.email}\",\"#{ current_user.password}\",\"#{ current_user.name}\", #{accounts_id});", :symbolize_keys => true)
 
 	end
 
@@ -99,7 +99,7 @@ class Creation
 		savedMoney=nil
 		result.each do |row|
 			savedMoney= row[:savedMoney]
-			puts row
+			puts "Dinero de la meta", savedMoney 
 		end
 
 		if id_goal.class == Integer

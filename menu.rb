@@ -331,9 +331,19 @@ class Menu
 				value = gets.chomp.to_i
 				validacion = Validator.new()
 				if validacion.positive_number(value)
-					puts "Ingrese Fecha limite (YYYYMMDD)"
-					goal_date = gets.chomp
-					@creacion.create_goals(goal_name,goal_date,value)					
+					puts "Fecha limite", "Por favor ingrese el año: "
+					year = gets.chomp.to_i
+					puts "Por favor ingrese el mes: "
+					month = gets.chomp.to_i
+					puts "Por favor ingrese el dia: "
+					day = gets.chomp.to_i
+					if validacion.date(year,month,day)
+						goal_date = year.to_s + month.to_s + day.to_s 
+						@creacion.create_goals(goal_name,goal_date,value)	
+					else
+						puts "Fecha Invalido"	
+					end
+										
 				else
 					puts "Monto Invalido"
 				end
@@ -343,7 +353,7 @@ class Menu
 
 			when "3"
 				system("clear")
-				puts "Ingrese el numero de la meta que desea cerrar"
+				puts "Ingrese el nombre de la meta que desea cerrar"
 				toclose = gets.chomp
 				@creacion.delete_goals(toclose)
 
