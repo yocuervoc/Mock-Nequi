@@ -12,14 +12,14 @@ Esta aplicacion fue desarrollada como un sistema basado en consola que permite:
 
 Se utiliza la gema https://www.rubydoc.info/gems/mysql2/0.5.2 para conectarse a la base de datos desde ruby.
 
-#Uso
+## Uso
 
 1. Correr el script database.sql en  un servidor Mysql 5.x para crear la base de datos necesaria.
 2. Modificar las propiedades de conexion del servidor Mysql.
 3. Correr el programa Mock-Nequi.rb
 
 Colaboradores
-Oscar Gomez
-Yonatan Cuervo
+- Oscar Gomez
+- Yonatan Cuervo
 
 
