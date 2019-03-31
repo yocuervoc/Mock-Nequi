@@ -7,10 +7,10 @@ class Modifier
 	def initialize(user)
 		@email = user.email
 		@password = user.password
-		
+
 		@sesion=Login.new(user)
 		@db_connection = @sesion.db_connection
-		@id_user = @sesion.log
+		@id_user = @sesion.id_current_user
 	end
 
 	def add_money_account(amount)
@@ -187,7 +187,7 @@ class Modifier
 		if disponible >= amount
 			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{accounts_id};", :symbolize_keys => true)
 			result = @db_connection.client.query("UPDATE pockets SET pocketMoney = pocketMoney - #{amount} WHERE id = #{id_pocket};", :symbolize_keys => true)
-			
+
 			#transaction(from, to, description, value)
 			transaction(@id_user, @id_user, "retiro dinero del bolsillo #{nombre_pocket}", amount)
 			puts "transaccion exitosa"
@@ -262,7 +262,7 @@ class Modifier
 		end
 
 	end
-	
+
 	def transaction(from, to, description, value)
 		if from == to
 			result = @db_connection.client.query("insert into transactions (`from`, `to`, `description`, `value`, `date`, `accounts_id`) values (#{from},#{to},\'#{description}\',#{value},now(), #{from});", :symbolize_keys => true)
@@ -272,4 +272,3 @@ class Modifier
 		end
 	end
 end
-

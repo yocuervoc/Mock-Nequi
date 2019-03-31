@@ -38,9 +38,9 @@ class Validator
 			else
 				return false
 			end
-			
+
 		end
-		
+
 	end
 
 	def goal_name_validator(name)
