@@ -45,7 +45,7 @@ class Query
 		list = ""
 		result = @db_connection.client.query("select * from transactions where accounts_id = #{id_count};")
 		result.each do |row|
-			list = list + "#{row["description"]} \t #{row["value"]} \t #{row["date"]} \n"
+			list = list + "| #{row["date"]} | #{row["description"].ljust(49)} | #{row["value"].to_s.rjust(10)} | \n"
 		end
 
 		return list
@@ -70,7 +70,7 @@ class Query
 		result = @db_connection.client.query("select name, pocketMoney from pockets where accounts_id = #{id_count};")
 		list = ""
 		result.each do |row|
-			list = list + "#{row["name"]} \t #{row["pocketMoney"]} \n"
+			list = list + "| #{row["name"].ljust(62)} | #{row["pocketMoney"].to_s.rjust(10)} | \n"
 		end
 		return list
 
@@ -82,10 +82,10 @@ class Query
 		result.each do |row|
 			id_count= row[:accounts_id]
 		end
-		result = @db_connection.client.query("select name, date, savedMoney, totalAmount from goals where accounts_id = #{id_count};")
+		result = @db_connection.client.query("select name, date, savedMoney, totalAmount, fulfilled from goals where accounts_id = #{id_count};")
 		list = ""
 		result.each do |row|
-			list = list + "#{row["name"]} \t #{row["savedMoney"]} \t #{row["totalAmount"]} \n"
+			list = list + "| #{row["name"].ljust(30)} | #{row["savedMoney"].to_s.rjust(11)} | #{row["totalAmount"].to_s.rjust(11)} | #{row["date"]} | #{row["fulfilled"].to_s} |\n"
 		end
 		
 		return list

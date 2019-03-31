@@ -5,8 +5,7 @@ require_relative "menu.rb"
 
 while true
     system("clear")
-    puts "----------------------------------------------",
-         "-----------------Mock-Nequi-------------------",
+    puts "---------------------------------Mock-Nequi------------------------------------",
          "Usted desea: ",
          "1. Regiatrarse" ,
          "2. Iniciar Sesion" ,
@@ -40,8 +39,8 @@ while true
             Menu = Menu.new(user)
             Menu.main_menu(user)
         else
-            puts "Correo o contraseña incorrecta"
-            sleep(2)
+            puts "Correo o contraseña incorrecta","Pulse enter para volver"
+			option = gets.chomp
         end
 
     when "3"
@@ -49,8 +48,7 @@ while true
         puts "Saliendo del programa..."
         break
     else
-        system("clear")
-        puts "Opcion incorrecta, vuelva a intentar"
-        sleep(1)
+        puts "Opcion incorrecta, vuelva a intentar","Pulse enter para volver"
+		option = gets.chomp
     end
 end
