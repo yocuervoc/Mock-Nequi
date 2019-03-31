@@ -1,7 +1,9 @@
+require 'io/console'
 require_relative 'connection.rb'
 require_relative 'create.rb'
 require_relative "login.rb"
 require_relative "menu.rb"
+
 
 while true
     system("clear")
@@ -20,7 +22,7 @@ while true
         puts "Ingrese su correo electronico:"
         email = gets.chomp
         puts "Ingrese contraseña: "
-        password = gets.chomp
+        password = STDIN.noecho(&:gets).chomp
         usuario = User.new(user_name,email,password)
         creacion = Creation.new(usuario)
         succeful_register = creacion.register_user
@@ -38,7 +40,7 @@ while true
         puts "Ingrese su correo electronico:"
         email = gets.chomp
         puts "Ingrese contraseña: "
-        password = gets.chomp
+        password = STDIN.noecho(&:gets).chomp
         user = User.new(email,email,password)
         usuario = Login.new(user)
         if usuario.log.class == Integer
