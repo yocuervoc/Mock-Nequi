@@ -1,14 +1,15 @@
 require_relative 'connection.rb'
 require_relative 'user.rb'
 require_relative 'login.rb'
+require 'digest'
 
 class Creation
 
 	def initialize(user)
 		@user_name= user.name
-		@password = user.password
+		@password =  Digest::SHA1.hexdigest user.password
 		@email = user.email
-		
+
 		@sesion=Login.new(user)
 		@db_connection = @sesion.db_connection
 		@id_user = @sesion.log
@@ -111,4 +112,3 @@ class Creation
 	end
 
 end
-
