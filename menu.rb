@@ -35,7 +35,7 @@ class Menu
 				"6. Bolsillos",
 				"7. Metas",
 				"8. Cerrar sesion"
-	
+
 			option = gets.chomp
 			case option
 			when "1"
@@ -67,7 +67,7 @@ class Menu
 
 				puts "Pulse enter para volver"
 				option = gets.chomp
-		
+
 			when "3"
 				system("clear")
 				puts "Ingrese el correo del usuario destino"
@@ -84,13 +84,13 @@ class Menu
 
 				puts "Pulse enter para volver"
 				option = gets.chomp
-						
+
 			when "4"
 				system("clear")
 				puts "Ingrese el numero de transacciones"
 				number = gets.chomp
 				transactions_menu(number)
-		
+
 			when "5"
 				mattress_menu()
 
@@ -108,9 +108,9 @@ class Menu
 			end
 		end
 	end
-	
+
 	def transactions_menu(number)
-		
+
 		while true
 
 			listado = @consulta.transactions_query
@@ -171,7 +171,7 @@ class Menu
 
 				puts "Pulse enter para volver"
 				option = gets.chomp
-				
+
 			when "2"
 				system("clear")
 				puts "¿Cuanto desea sacar del colchon?"
@@ -186,7 +186,7 @@ class Menu
 
 				puts "Pulse enter para volver"
 				option = gets.chomp
-				
+
 			when "3"
 				break
 			else
@@ -221,15 +221,22 @@ class Menu
 					 "+----------------------------------------------------------------+------------+"
 				puts "Pulse enter para volver"
 				option = gets.chomp
-				
+
 			when "2"
 				system("clear")
 				puts "Nombre del bolsillo"
 				pocket_name = gets.chomp
-				@creacion.create_pocket(pocket_name)
-				puts "Bolsillo creado exitosamente", "Pulse enter para volver"
-				option = gets.chomp
-				
+				validacion = Validator.new()
+				if validacion.pocket_name_validator(pocket_name)
+					@creacion.create_pocket(pocket_name)
+				else
+					puts "Nombre invalido"
+					puts "Pulse enter para volver"
+					option = gets.chomp
+				end
+
+
+
 			when "3"
 				system("clear")
 				puts "Ingrese el nombre del bolsillo que desea eliminar"
@@ -266,10 +273,10 @@ class Menu
 				else
 					puts "Monto Invalido"
 				end
-				
+
 				puts "Pulse enter para volver"
 				option = gets.chomp
-				
+
 			when "6"
 				system("clear")
 				puts "Ingrese el nombre del bolsillo del que desea enviar dinero"
@@ -285,10 +292,10 @@ class Menu
 				else
 					puts "Monto Invalido"
 				end
-				
+
 				puts "Pulse enter para volver"
 				option = gets.chomp
-				
+
 			when "7"
 				break
 			else
@@ -322,24 +329,34 @@ class Menu
 
 				puts "Pulse enter para volver"
 				option = gets.chomp
-				
+
 			when "2"
 				system("clear")
 				puts "Ingrese el nombre de la meta"
 				goal_name = gets.chomp
-				puts "Ingrese el valor de la meta"
-				value = gets.chomp.to_i
+
 				validacion = Validator.new()
-				if validacion.positive_number(value)
-					puts "Ingrese Fecha limite (YYYYMMDD)"
-					goal_date = gets.chomp
-					@creacion.create_goals(goal_name,goal_date,value)					
+				if validacion.goal_name_validator(goal_name)
+					puts "Ingrese el valor de la meta"
+					value = gets.chomp.to_i
+					validacion = Validator.new()
+					if validacion.positive_number(value)
+						puts "Ingrese Fecha limite (YYYYMMDD)"
+						goal_date = gets.chomp
+						@creacion.create_goals(goal_name,goal_date,value)
+					else
+						puts "Monto Invalido"
+					end
+
+					puts "Pulse enter para volver"
+					option = gets.chomp
 				else
-					puts "Monto Invalido"
+					puts "Nombre invalido"
+					puts "Pulse enter para volver"
+					option = gets.chomp
 				end
 
-				puts "Pulse enter para volver"
-				option = gets.chomp
+
 
 			when "3"
 				system("clear")
@@ -349,7 +366,7 @@ class Menu
 
 				puts "Pulse enter para volver"
 				option = gets.chomp
-				
+
 			when "4"
 				system("clear")
 				puts "Ingrese el nombre de la meta"
@@ -358,14 +375,14 @@ class Menu
 				value = gets.chomp.to_i
 				validacion = Validator.new()
 				if validacion.positive_number(value)
-					@modificador.add_money_goal(goal_name,value)					
+					@modificador.add_money_goal(goal_name,value)
 				else
 					puts "Monto Invalido"
 				end
-				
+
 				puts "Pulse enter para volver"
 				option = gets.chomp
-				
+
 			when "5"
 				break
 			else

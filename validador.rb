@@ -12,6 +12,11 @@ class Validator
 		return (password.length >=6) ? true : false
 	end
 
-end 
+	def pocket_name_validator(name)
+		return (name.length >= 1 and name[0]!= " ")? true : false
+	end
 
-
+	def goal_name_validator(name)
+		return (name.length >= 1 and name[0]!= " ")? true : false
+	end
+end
