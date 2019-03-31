@@ -81,7 +81,7 @@ class Modifier
 			else
 				puts "transaccion invalida, NO MONEY"
 			end
-		end 
+		end
 	end
 
 	def add_money_mattress(amount)
@@ -147,21 +147,27 @@ class Modifier
 			id_pocket= row[:id]
 		end
 
-		result = @db_connection.client.query("select disponible from accounts where id = #{accounts_id};", :symbolize_keys => true)
-		disponible=0
-		result.each do |row|
-			disponible= row[:disponible]
+		if id_pocket == nil
+			puts "bolsillo no encontrado"
+		else
+
+			result = @db_connection.client.query("select disponible from accounts where id = #{accounts_id};", :symbolize_keys => true)
+			disponible=0
+			result.each do |row|
+				disponible= row[:disponible]
+			end
+
+			if disponible >= amount
+				result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{accounts_id};", :symbolize_keys => true)
+				result = @db_connection.client.query("UPDATE pockets SET pocketMoney = pocketMoney + #{amount} WHERE id = #{id_pocket};", :symbolize_keys => true)
+				#transaction(from, to, description, value)
+			  	transaction(@id_user, @id_user, "envio dinero al bolsillo #{nombre_pocket}", amount)
+				puts "transaccion exitosa"
+			else
+				puts "transaccion invalida, NO MONEY"
+			end
 		end
 
-		if disponible >= amount
-			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{accounts_id};", :symbolize_keys => true)
-			result = @db_connection.client.query("UPDATE pockets SET pocketMoney = pocketMoney + #{amount} WHERE id = #{id_pocket};", :symbolize_keys => true)
-			#transaction(from, to, description, value)
-		  	transaction(@id_user, @id_user, "envio dinero al bolsillo #{nombre_pocket}", amount)
-			puts "transaccion exitosa"
-		else
-			puts "transaccion invalida, NO MONEY"
-		end
 	end
 
 	def withdraw_money_pocket(nombre_pocket, amount)
@@ -177,25 +183,29 @@ class Modifier
 		id_pocket=nil
 		result.each do |row|
 			id_pocket= row[:id]
-
 		end
 
-		result = @db_connection.client.query("select pocketMoney from pockets where id = #{id_pocket};", :symbolize_keys => true)
-		disponible=0
-		result.each do |row|
-			disponible= row[:pocketMoney]
-		end
-
-		if disponible >= amount
-			result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{accounts_id};", :symbolize_keys => true)
-			result = @db_connection.client.query("UPDATE pockets SET pocketMoney = pocketMoney - #{amount} WHERE id = #{id_pocket};", :symbolize_keys => true)
-
-			#transaction(from, to, description, value)
-			transaction(@id_user, @id_user, "retiro dinero del bolsillo #{nombre_pocket}", amount)
-			puts "transaccion exitosa"
+		if id_pocket == nil
+			puts "bolsillo no encontrado"
 		else
-			puts "transaccion invalida, NO MONEY"
+			result = @db_connection.client.query("select pocketMoney from pockets where id = #{id_pocket};", :symbolize_keys => true)
+			disponible=0
+			result.each do |row|
+				disponible= row[:pocketMoney]
+			end
+
+			if disponible >= amount
+				result = @db_connection.client.query("UPDATE accounts SET disponible = disponible + #{amount} WHERE id = #{accounts_id};", :symbolize_keys => true)
+				result = @db_connection.client.query("UPDATE pockets SET pocketMoney = pocketMoney - #{amount} WHERE id = #{id_pocket};", :symbolize_keys => true)
+
+				#transaction(from, to, description, value)
+				transaction(@id_user, @id_user, "retiro dinero del bolsillo #{nombre_pocket}", amount)
+				puts "transaccion exitosa"
+			else
+				puts "transaccion invalida, NO MONEY"
+			end
 		end
+
 	end
 
 	def send_money_pocket(nombre_pocket, amount)
