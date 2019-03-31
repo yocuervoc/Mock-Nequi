@@ -33,6 +33,7 @@ class Login
       puts "Correo o contraseña incorrecta","Pulse enter para volver"
       option = gets.chomp
     else
+      puts "que es esto #{user.class}"
       mnu = Menu.new(user)
       mnu.main_menu(user)
     end

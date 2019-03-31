@@ -197,8 +197,6 @@ class Modifier
 	end
 
 	def send_money_pocket(nombre_pocket, amount)
-
-
 		result = @db_connection.client.query("select accounts_id from users where id = #{@id_user};", :symbolize_keys => true)
 		accounts_id=nil
 		result.each do |row|
@@ -209,7 +207,6 @@ class Modifier
 		id_pocket=nil
 		result.each do |row|
 			id_pocket= row[:id]
-
 		end
 
 		result = @db_connection.client.query("select pocketMoney from pockets where id = #{id_pocket};", :symbolize_keys => true)
@@ -250,10 +247,39 @@ class Modifier
 			end
 
 			if disponible >= amount
-				result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{accounts_id};", :symbolize_keys => true)
-				result = @db_connection.client.query("UPDATE goals SET savedMoney = savedMoney + #{amount} WHERE id = #{id_goal};", :symbolize_keys => true)
-				#transaction(from, to, description, value)
-	 		 	transaction(@id_user, @id_user, "envio de dinero a la meta #{name_goal}", amount)
+
+				result = @db_connection.client.query("select fulfilled from goals where accounts_id = #{accounts_id};", :symbolize_keys => true)
+				fulfilled=0
+				result.each do |row|
+					fulfilled= row[:fulfilled]
+				end
+
+				if fulfilled == "0"
+					result = @db_connection.client.query("UPDATE accounts SET disponible = disponible - #{amount} WHERE id = #{accounts_id};", :symbolize_keys => true)
+					result = @db_connection.client.query("UPDATE goals SET savedMoney = savedMoney + #{amount} WHERE id = #{id_goal};", :symbolize_keys => true)
+					#transaction(from, to, description, value)
+		 		 	transaction(@id_user, @id_user, "envio de dinero a la meta #{name_goal}", amount)
+
+					result = @db_connection.client.query("select savedMoney from goals where accounts_id = #{accounts_id};", :symbolize_keys => true)
+					savedMoney=0
+					result.each do |row|
+						savedMoney= row[:savedMoney]
+					end
+
+					result = @db_connection.client.query("select totalAmount from goals where accounts_id = #{accounts_id};", :symbolize_keys => true)
+					totalAmount=0
+					result.each do |row|
+						totalAmount= row[:totalAmount]
+					end
+
+					if savedMoney >= totalAmount
+						result = @db_connection.client.query("UPDATE goals SET fulfilled = 1  WHERE id = #{id_goal};", :symbolize_keys => true)
+					end
+
+				else
+					puts "transaccion invalida, meta alcanzada"
+				end
+
 			else
 				puts "transaccion invalida, NO MONEY"
 			end
