@@ -113,7 +113,7 @@ class Menu
 		
 		while true
 
-			listado = @consulta.transactions_query
+			listado = @consulta.transactions_query(number)
 			option = "2"
 			if  listado != nil
 				puts "Listado de las ultimas #{number} Tansacciones"
@@ -129,7 +129,7 @@ class Menu
 				puts "+------------+---------------------------------------------------+------------+",
 					 "| Fecha      |  Descripcion                                      | Valor      |",
 					 "+------------+---------------------------------------------------+------------+",
-					  @consulta.transactions_query,
+					  listado,
 					  "+------------+---------------------------------------------------+------------+"
 
 				puts "Pulse enter para volver"
