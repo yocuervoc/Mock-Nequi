@@ -7,12 +7,12 @@ class Query
 	def initialize(user)
 
 		@email = user.email
-		@password = user.password
-		
+		@password = Digest::SHA1.hexdigest user.password
+
 		@sesion=Login.new(user)
 		@db_connection = @sesion.db_connection
 		@id_user = @sesion.log
-		
+
 	end
 
 	def total_balance_query
@@ -87,7 +87,7 @@ class Query
 		result.each do |row|
 			list = list + "#{row["name"]} \t #{row["savedMoney"]} \t #{row["totalAmount"]} \n"
 		end
-		
+
 		return list
 
 	end
